@@ -1,0 +1,10 @@
+~*
+*.md
+.DS_Store
+.ipynb_checkpoints
+questions.txt
+secrets.txt
+*.log
+.chroma
+docs/data-files
+*.pptx

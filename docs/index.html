@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Making and breaking AI in the newsroom</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Making and breaking AI in the newsroom_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Making and breaking AI in the newsroom_files/libs/quarto-html/quarto.js"></script>
+<script src="Making and breaking AI in the newsroom_files/libs/quarto-html/popper.min.js"></script>
+<script src="Making and breaking AI in the newsroom_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Making and breaking AI in the newsroom_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Making and breaking AI in the newsroom_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Making and breaking AI in the newsroom_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#headline-generation" id="toc-headline-generation" class="nav-link active" data-scroll-target="#headline-generation">Headline generation</a></li>
+  <li><a href="#article-summaries" id="toc-article-summaries" class="nav-link" data-scroll-target="#article-summaries">Article summaries</a></li>
+  <li><a href="#document-summaries-research" id="toc-document-summaries-research" class="nav-link" data-scroll-target="#document-summaries-research">Document summaries (research)</a>
+  <ul class="collapse">
+  <li><a href="#text-file" id="toc-text-file" class="nav-link" data-scroll-target="#text-file">Text file</a></li>
+  <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf">PDF</a></li>
+  </ul></li>
+  <li><a href="#translation" id="toc-translation" class="nav-link" data-scroll-target="#translation">Translation</a></li>
+  <li><a href="#transcription-speech-to-text" id="toc-transcription-speech-to-text" class="nav-link" data-scroll-target="#transcription-speech-to-text">Transcription (speech to text)</a></li>
+  <li><a href="#reading-text-out-loud-text-to-speech" id="toc-reading-text-out-loud-text-to-speech" class="nav-link" data-scroll-target="#reading-text-out-loud-text-to-speech">Reading text out loud (text to speech)</a>
+  <ul class="collapse">
+  <li><a href="#voice-cloning" id="toc-voice-cloning" class="nav-link" data-scroll-target="#voice-cloning">Voice cloning</a></li>
+  </ul></li>
+  <li><a href="#text-classification" id="toc-text-classification" class="nav-link" data-scroll-target="#text-classification">Text classification</a>
+  <ul class="collapse">
+  <li><a href="#zero-shot-classification" id="toc-zero-shot-classification" class="nav-link" data-scroll-target="#zero-shot-classification">Zero-shot classification</a></li>
+  <li><a href="#gpt-in-google-sheets" id="toc-gpt-in-google-sheets" class="nav-link" data-scroll-target="#gpt-in-google-sheets">GPT in Google Sheets</a></li>
+  <li><a href="#few-shot-classification" id="toc-few-shot-classification" class="nav-link" data-scroll-target="#few-shot-classification">Few-shot classification</a></li>
+  <li><a href="#custom-classifiers" id="toc-custom-classifiers" class="nav-link" data-scroll-target="#custom-classifiers">Custom classifiers</a></li>
+  </ul></li>
+  <li><a href="#format-shifting" id="toc-format-shifting" class="nav-link" data-scroll-target="#format-shifting">Format shifting</a></li>
+  <li><a href="#image-models" id="toc-image-models" class="nav-link" data-scroll-target="#image-models">Image models</a>
+  <ul class="collapse">
+  <li><a href="#object-detection" id="toc-object-detection" class="nav-link" data-scroll-target="#object-detection">Object detection</a></li>
+  <li><a href="#semantic-segmentation" id="toc-semantic-segmentation" class="nav-link" data-scroll-target="#semantic-segmentation">Semantic segmentation</a></li>
+  <li><a href="#panoptic-segmentation" id="toc-panoptic-segmentation" class="nav-link" data-scroll-target="#panoptic-segmentation">Panoptic segmentation</a></li>
+  </ul></li>
+  <li><a href="#semantic-search" id="toc-semantic-search" class="nav-link" data-scroll-target="#semantic-search">Semantic search</a>
+  <ul class="collapse">
+  <li><a href="#searching-through-documents-with-semantic-search" id="toc-searching-through-documents-with-semantic-search" class="nav-link" data-scroll-target="#searching-through-documents-with-semantic-search">Searching through documents with semantic search</a></li>
+  <li><a href="#specifying-details" id="toc-specifying-details" class="nav-link" data-scroll-target="#specifying-details">Specifying details</a></li>
+  </ul></li>
+  <li><a href="#retrieval-augmented-generation-smart-chatbots" id="toc-retrieval-augmented-generation-smart-chatbots" class="nav-link" data-scroll-target="#retrieval-augmented-generation-smart-chatbots">Retrieval-augmented generation (smart chatbots)</a></li>
+  <li><a href="#expanding-your-skillset" id="toc-expanding-your-skillset" class="nav-link" data-scroll-target="#expanding-your-skillset">Expanding your skillset</a></li>
+  <li><a href="#contact-me" id="toc-contact-me" class="nav-link" data-scroll-target="#contact-me">Contact me</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Making and breaking AI in the newsroom</h1>
+<p class="subtitle lead">iMEdD Forum, Athens 2023</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Jonathan Soma / <a href="mailto:js4571@columbia.edu">js4571@columbia.edu</a> / <a href="https://twitter.com/dangerscarf/"><span class="citation" data-cites="dangerscarf">@dangerscarf</span></a></p>
+<p>iMEdD Forum 2023</p>
+<p>🕹️ GitHub repo can be found at <a href="https://github.com/jsoma/2023-imedd-ai-workshop">https://github.com/jsoma/2023-imedd-ai-workshop</a></p>
+<p>💻 Run this notebook as a live programming exercise <a href="https://colab.research.google.com/github/jsoma/2023-imedd-ai-workshop/blob/main/docs/Making%20and%20breaking%AI%20in%20the%20newsroom.ipynb">here on Google Colab</a>. Use <code>shift+enter</code> or the ▶️ button to run the code.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This web page was made from a Jupyter notebook! To see how I made it, <a href="https://github.com/jsoma/quarto-tutorial">see this tutorial about Quarto</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget ai<span class="op">-</span>report.pdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q <span class="op">--</span>upgrade transformers openai langchain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(<span class="st">"Give me a recipe for chocolate-chip cookies"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="headline-generation" class="level2">
+<h2 class="anchored" data-anchor-id="headline-generation">Headline generation</h2>
+<p>You should do this in ChatGPT! It’s much better as a conversation than using a single perfect prompt to get the result you want.</p>
+</section>
+<section id="article-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="article-summaries">Article summaries</h2>
+<p>Sometimes you need to write little blurbs for articles: maybe for social posts, front pages, or newsletters.</p>
+<p>Below is a NYTimes article I’m using as an example.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>article <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">A few blocks away from where a 1-year-old boy died, possibly from fentanyl poisoning at his Bronx day care this month, an open-air drug market persists along a trash-strewn underpass.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">On Wednesday, a man on a moped arrived in the late afternoon and about a dozen users ambled over to purchase drugs with dollar bills in their hands. People tied off their arms, prepped needles or packed pipes. After a while, the ground was littered with syringes and bloodstained alcohol swabs.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">No police officers were seen, although they are often nearby — sometimes steps away in the Kingsbridge Road subway station. But they rarely intervene, according to local residents, elected officials who have tried to clean up the area for several years, and nonprofit workers who distribute food and clean needles at the site.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">Residents and community leaders say they are regularly told by city officials that they are doing their best to make the area safer. But the Kingsbridge Road underpass is just one of many locations in the city where drug use has become more open, even as lives lost to overdoses are at a record high — roughly 3,200 such deaths citywide in 2022, according to an annual report by the city’s special narcotics prosecutor’s office.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">The situation there underscores an increasingly difficult dilemma for the city: how to curb an epidemic killing thousands of New Yorkers and making neighborhoods feel unlivable for thousands of others, without reverting to aggressive crackdowns, which many leaders and public health experts said have led to civil rights abuses and did not effectively curb drug use.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">The stakes are especially high with fentanyl, an extremely potent drug whose street version is becoming ever deadlier. It can kill a child if even a tiny amount is accidentally swallowed.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">Areas of the city where drug use is often in plain view range from lower-income and working class areas like the Hub at 149th Street in the Bronx, to busy tourist-filled spots like Times Square and parts of the West Village. Other cities, like Portland, Ore., and Phoenix, are grappling with similar problems.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">“The kids have to walk by it every day, exposed at a young age to very graphic scenes,” said Carol Rodriguez, 39, who was walking not far from the Kingsbridge underpass on her way to get her 9-year-old from school. She said things had deteriorated since the pandemic. “I worry that they grow up thinking this is normal.”</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">Tolerating low-level dealing also represents a broader threat beyond the public health crisis, some former law enforcement officials warn, because violence can follow, and because it makes it harder to find and prosecute those higher up the chain.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">In the meantime, the question of how to avoid the collateral damage of drug use has only grown more urgent: Opioids have become the leading cause of child poisonings in the United States. More than 1,500 children died in fatal overdoses involving fentanyl in 2021, according to one study; over 100 were children under the age of 4.</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">Officials have not confirmed whether fentanyl was the cause of death for Nicholas Feliz Dominici, the 1-year-old who died in the Bronx on Sept. 15, but three other children from the same day care were hospitalized that day after they were exposed to fentanyl. Days after the child died, the police discovered a trap door under a play area concealing large, clear storage bags filled with narcotics. The day care’s operator and a man who lived in the apartment that housed the day care have been arrested and charged with murder and criminal drug possession.</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">The rising death toll comes as the city and the state have turned away from the aggressive law enforcement of low-level street drug activity that was common in the late 1990s. The shift has happened gradually over time, as a broader movement has pushed to reframe drug use as a public health crisis rather than as primarily a criminal issue.</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="st">New York City, for example, has the only city-sanctioned drug consumption sites in the nation, in East Harlem and Washington Heights, where people can use drugs under the supervision of trained workers who prevent overdoses while offering treatment to those who ask for it.</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="st">Proponents of this path say that criminalization has not worked, and has clearly not led to the elimination of drugs from our society. Rather, they say, it just pushes the problem out of view, and makes it harder for users to get help.</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="st">“The thing I refuse to do is say that the way to solve the problem is to throw more police at it,” said Gustavo Rivera, a state senator representing the Bronx, who has introduced a bill supporting decriminalization of all drugs. “We have to have a comprehensive approach.”</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="st">He added that if there was an overdose prevention center near the underpass, “you would not have those folks there. They would be in a non-stigmatized place, able to access services.”</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="st">There have been several forks in the road that have led more public officials to think the same way.</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="st">The so-called War on Drugs in the 1970s and 1980s aimed for a zero-tolerance approach. But it also led to the incarceration of millions of Black and Latino people across the country, often for nonviolent offenses. While the overall number of cocaine users declined during those years, the amount of drugs consumed stayed the same and the number of teenagers who tried illicit drugs rose, according to one study by the RAND Corporation.</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="st">In response, New York passed laws to address civil rights concerns, including one in 2019 that, among other things, significantly increased the amount of paperwork that had to be done after drug arrests, and gave prosecutors a shorter time frame to hand evidence over to the accused.</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="st">In 2021, Gov. Kathy Hochul signed a law that decriminalized the sale and possession of hypodermic needles, and also expanded the number of crimes in which those charged were eligible for diversion to drug treatment programs instead of prison. It was another signal to law enforcement that while possessing a small quantity of illegal drugs remains a crime — street use, in some ways, had essentially been decriminalized.</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="st">State bail reform laws, also passed in 2019, have allowed more people accused of crimes to return to the community shortly after their arrests. Whether this has actually increased crime is not clear, but even so, experts said the police are less likely to act aggressively if they know the people they arrest will be back on the street shortly afterward.</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="st">Bridget Brennan, the city’s special narcotics prosecutor, said that while the new laws were intended to reduce overdoses and reverse decades of harsh prison sentences for lower-level offenses, they also had the unintended effect of emboldening drug dealers. She said prosecutors will charge dealers three or four times and they still will not be held on bail.</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="st">“What that means in terms of drug dealers is they’re going to be more bold and blatant in their activity,” she said. “There is a lot of money to be made and there is not much of a deterrent.”</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="st">The number of narcotics arrests in the city closely tracks the policy shift. There were 27,232 narcotics arrests in 2018, according to police data. That dropped to 14,156 in 2020, at the height of the pandemic. Narcotics arrests for 2023 have risen, to 16,000 as of Sept. 17, a 34 percent increase from the same time period last year, but they remain well below 2018 levels.</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="st">Joseph Kenny, the chief of detectives for the Police Department, said that arresting a person for having a needle “was never a priority in our world.”</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="st">“We are not looking to take drug abusers and put them in prison,” Chief Kenny said. “We want them to get the help they need.”</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="st">As for arresting low-level street dealers, he said, prosecutors “are asking us to build bigger cases.”</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="st">“We need to target the dealers, the suppliers and the traffickers,” Chief Kenny said.</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="st">Civil rights concerns animate those opposed to more crackdowns; 94 percent of those prosecuted for narcotics charges in the Bronx were Black or Latino.</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="st">Supporters of decriminalization also point to data showing the lives saved at supervised consumption sites. Some express frustration that despite outward support by public officials, the centers still often exist in a legal purgatory, illegal under federal law, and lack government funding that might allow them to expand. Opponents say the sites encourage more drug use, especially on the blocks nearby.</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="st">Dr. Andrea Littleton provides medical care to drug users at the Kingsbridge underpass. She favors decriminalization, because she hopes that would lead to more regulation, and “hopefully get some of the fentanyl off the street.”</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="st">“At least then it would be less deadly to individuals, to babies and day cares,” she said.</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="st">One of the biggest concentrations of street drug activity in the city is near 125th Street and Lexington Ave in Harlem, near some drug treatment clinics. On one Wednesday in August, four officers stood on the southwest corner of the street, two of them looking at their phones.</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="st">When approached by a reporter, they said they had been told to stand there.</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="st">At one point, a different pair of police officers approached a busy corner for street drug activity — to give a summons to a man for public drinking.</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="st">Shawn Hill, co-founder of the Greater Harlem Coalition, a community group, has spent dozens of hours documenting open drug activity in the neighborhood in the hopes of reducing it. He seldom spots an arrest, he said.</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="st">“I think policing has changed dramatically in the last four or five years,” he said.</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="st">In a statement, the Police Department called the issue “a real concern to residents in all city neighborhoods.”</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="st">“There’s still work to be done, but our officers are more engaged and focused than ever,” the statement said.</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="st">Narcotics squads are still making thousands of arrests, including high-level drug busts, which are often undertaken with federal law enforcement. To underscore the risks of fentanyl after last week’s day care death, the city on Wednesday held a news conference to announce a large guns and drugs bust in Queens.</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="st">Ms. Brennan said that last year, her office seized about 1,000 pounds of fentanyl off the street and about one million pills. Police officials said an additional 150 officers have been added to narcotics squads recently, with plans for more. Each borough has two teams of officers assigned to investigate 911 and 311 calls about drug-related complaints. Additional units conduct “buy and bust” operations, where undercover officers make multiple drug buys from the same dealer in order to catch the more prolific street-level dealers.</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="st">“Our goal is that citizens shouldn’t have to walk past a drug dealer to get into their building,” Chief Kenny said.</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="st">Yet in some pockets, like Kingsbridge, several residents said it feels so unsafe that they have stopped leaving the house after 6 p.m. “You’ll come down the stairs with the kids in the morning and there’s someone sitting there, just shooting up,” said Chris Castellanos, 35, a father of four children.</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="st">Karla Cabrera Carrera, the district manager of Community Board 7, which includes Kingsbridge, said that society has to think about the rights of residents to feel secure, too.</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="st">“We are really facing a really bad issue,” she said. “I love the Bronx, I don’t want to have to move, but at this point, we are all desperate to find a solution to all of it.”</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I put together a template that we can use to send the article to GPT. The <code>{text}</code> part gets filled in with whatever we want - in this case it’s the article, but we’ll expand on this in other directions below.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span><span class="st">"This fills in the blank"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Summarize the article below:
+
+This fills in the blank
+</code></pre>
+</div>
+</div>
+<p>Now let’s do all of the steps:</p>
+<ol type="1">
+<li>Connect to GPT</li>
+<li>Create our prompt</li>
+<li>Send it over</li>
+</ol>
+<p>Note that if you get an error, make sure you’re run the cell above that creates the article! You need to click it and shift+enter, or press the “Run” button.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>article)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>New York City's open-air drug markets, in areas such as the Bronx's Kingsbridge Road underpass, are becoming more of a problem, with police rarely intervening and overdoses at a record high. The city's special narcotics prosecutor’s office has reported that 3,200 deaths occurred in 2022 due to overdoses. The dilemma for the city is how to address the epidemic without resorting to aggressive crackdowns that have previously led to civil rights abuses and have not effectively curbed drug use. The situation is particularly concerning with the rise of fentanyl, a powerful synthetic opioid, which is becoming increasingly deadly. Over 1,500 children died from fentanyl overdoses in 2021, with over 100 of them being under the age of four. The city and state have been moving away from aggressive law enforcement of street drugs, instead viewing drug use as a public health crisis.
+</code></pre>
+</div>
+</div>
+<p>This gets us an answer, but <em>can we write a better prompt?</em></p>
+<p>Think about asking GPT to use a specific tone, or cheat a little by telling it to copy a publication. You can also set a length, reading level or target audience!</p>
+<p>I also recommend asking your tools for suggestions – you can try asking ChatGPT “how would you describe the writing style of the New York Times? Be detailed.” and use that as a jumping-off point.</p>
+<blockquote class="blockquote">
+<p>Don’t ever feel like your prompt is too long! Check the <a href="https://jamditis.notion.site/Superprompt-EditorBot-for-feedback-on-your-writing-0268051a8f384762a2686b1d43ad390b">EditorBot prompt</a> - it’s approximately ten million words long! You can always refine it later if you’d like.</p>
+</blockquote>
+<div class="cell" data-execution_count="98">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>article)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Open-air drug markets persist in New York City, even as the city grapples with a record high number of overdose deaths. The city's approach to drug use has shifted away from aggressive law enforcement towards treating it as a public health crisis, leading to a rise in visible drug use in areas ranging from low-income neighborhoods to tourist hubs. Critics argue this approach has led to an increase in violence and has made it harder to prosecute those higher up the drug chain. Meanwhile, the rise of fentanyl, a highly potent drug, has increased the stakes, with over 1,500 children dying from fatal overdoses in 2021. The city has responded by setting up supervised drug consumption sites, but these are often in a legal grey area and lack sufficient funding.</code></pre>
+</div>
+</div>
+</section>
+<section id="document-summaries-research" class="level2">
+<h2 class="anchored" data-anchor-id="document-summaries-research">Document summaries (research)</h2>
+<section id="text-file" class="level3">
+<h3 class="anchored" data-anchor-id="text-file">Text file</h3>
+<div class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I'll add this later!</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You don't normally have text files, do you?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="pdf" class="level3">
+<h3 class="anchored" data-anchor-id="pdf">PDF</h3>
+<p>PDFs are common sources for longer documents - reports, academic papers, etc.</p>
+<p>I like using <a href="https://pdfminersix.readthedocs.io/en/latest/">pdfminer.six</a> to extract text from PDFs, it’s super time. We’ll first pull the text out, then try to send it to GPT for a summary.</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.high_level <span class="im">import</span> extract_text</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pdf_text <span class="op">=</span> extract_text(<span class="st">"data-files/ai-report.pdf"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pdf_text[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>POLIS
+
+Journalism at LSE
+
+Generating Change
+A global survey of what news 
+organisations are doing with AI 
+
+Charlie Beckett and Mira Yaseen
+
+Preface
+
+Our news media world has been turned upside down again. As always, serious technological 
+change produces both dystopian and utopian hype. Much of this has been generated on social 
+media by corporate PR and politicians. News coverage and expert commentary has also 
+veered from excited coverage of positive breakthroughs in fields such as medicine to much 
+more frightening visions of negative forces unleashed: Generative AI (genAI) is producing a 
+tidal wave of automated, undetectable disinformation; it will amplify discrimination, extreme 
+speech and inequalities.&nbsp;
+
+And its impact on journalism? Again, much of the coverage has focused on the unreliability of 
+many genAI tools and the controversy over its rapacious appetite for other people’s data to train 
+its algorithms. As the initial storm of hype turns into more practical considerati</code></pre>
+</div>
+</div>
+<p>Now let’s use a simple summarization prompt.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the paper below:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>pdf_text)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>InvalidRequestError: This model's maximum context length is 8192 tokens. However, your messages resulted in 33095 tokens. Please reduce the length of the messages.</code></pre>
+</div>
+</div>
+<p><strong>We get an error!</strong> This is because our text is longer than GPT’s <strong>token limit.</strong></p>
+<p>To make this summarization work, we have to <strong>split our document into pieces!</strong></p>
+<blockquote class="blockquote">
+<p>Instead of the AI report, I’m also going to shift to using a slightly shorter academic paper! The AI report gets broken into about 90 pieces which takes a while to process. The science paper is only a <em>little</em> long, so it’s just 21 segments.</p>
+<p>If you’d like to try the AI report (and wait a while in the process), feel free to change the filename.</p>
+</blockquote>
+<p>We’ll start by reading in our document, and using <code>load_and_split</code> to divide it up into separate pages. Later on we’ll show an example of a more “intelligent” splitting that understands headers and sections, but this one is a simple example for now.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'data-files/science-paper.pdf'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>21</code></pre>
+</div>
+</div>
+<p>Then we’ll connect to GPT.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we’ll create a prompt to summarize the pieces. It’s a lot of code, but I promise you’ll (almost???) always use the same one every time.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> PromptTemplate</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains.summarize <span class="im">import</span> load_summarize_chain</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>prompt_template <span class="op">=</span> <span class="st">"""Summarize the following document.</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">TEXT: </span><span class="sc">{text}</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">CONCISE SUMMARY:"""</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>PROMPT <span class="op">=</span> PromptTemplate(template<span class="op">=</span>prompt_template, input_variables<span class="op">=</span>[<span class="st">"text"</span>])</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>chain <span class="op">=</span> load_summarize_chain(llm,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                             chain_type<span class="op">=</span><span class="st">"map_reduce"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>                             return_intermediate_steps<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                             map_prompt<span class="op">=</span>PROMPT,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>                             combine_prompt<span class="op">=</span>PROMPT)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> chain({<span class="st">"input_documents"</span>: docs}, return_only_outputs<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">'output_text'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>This document is a review of the nutrient composition and value of milk and plant-based milk alternatives. It compares the protein, fat, and calcium content of various plant-based milks to cow's milk. The review finds that plant-based milk alternatives often have lower nutritional value, particularly in terms of protein content. It also discusses other factors such as vitamin and mineral content and absorption. The document highlights the importance of understanding the implications of using plant-based milk alternatives as nutritional replacements. It mentions public health concerns related to the consumption of milk and provides references to studies on nutrition and health. Overall, the document concludes that plant-based milk alternatives are generally nutritionally inferior to cow's milk and should not be considered as complete nutritional alternatives.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="translation" class="level2">
+<h2 class="anchored" data-anchor-id="translation">Translation</h2>
+<p>While we <em>could</em> use something like DeepL or Google Translate, why not just use the LLM for <em>absolutely everything?</em></p>
+<div class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>folktale <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data-files/folktale-short.txt"</span>).read()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(folktale[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A KÓRÓ ÉS A KIS MADÁR.
+
+Egyszer volt, hol nem volt, volt a világon egy kis madár. Ez a kis madár
+egyszer nagyon megunta magát, rászállt egy kóróra:
+
+– Kis kóró ringass engemet!
+
+– Nem ringatom biz én senki kis madarát!
+
+A kis madár megharagudott, elrepült onnan. A mint ment mendegélt, talált
+egy kecskét:
+
+– Kecske! rágd el a kórót!
+
+Kecske nem ment kóró rágni, a kóró még se’ ringatta a kis madarat.
+Megint ment mendegélt a kis madár, talált egy farkast:
+
+– Farkas! edd meg a kecskét!
+
+Farkas nem ment kecske enni, kecske nem ment kóró rágni, kóró még se’
+ringatta a kis madarat.
+
+Megint ment mendegélt a kis madár, talált egy falut:
+
+– Falu! kergesd el a farkast!
+
+Falu nem ment farkas kergetni, farkas nem ment kecske enni, kecske nem
+ment kóró rágni, a kóró még se’ ringatta a kis madarat;
+
+Megint ment mendegélt a kis madár, talált egy tüzet:
+
+– Tűz! égesd meg a falut.
+
+Tűz nem ment falu égetni, falu nem ment farkas kergetni, farkas nem ment
+kecske enni, kecske nem ment kóró rágni, a kóró még se’ ringatta a kis
+madarat.
+
+Megint ment mendegélt a kis madár, talált egy vizet:
+
+– Viz! oltsd el a tüzet.
+
+Viz nem ment tüzet oltani, tűz nem ment falu égetni, falu nem ment
+farkas kergetni, farkas nem ment kecske enni, kecske nem ment kóró
+rágni, a kóró még se’ ringatta a kis madarat.
+
+Megint ment mendegélt a kis madár, talált egy bikát:
+
+– Bika! idd fel a vizet!
+
+Bika nem ment vizet inni, viz nem ment tüzet oltani, tűz nem ment falu
+égetni, falu nem ment farkas kergetni, farkas nem ment kecske enni,
+kecske nem ment kóró rágni, a kóró még se’ ringatta a kis madarat.
+
+Megint ment mendegélt a kis madár, talált egy furkót.
+
+– Furkó üsd agyon a bikát.
+
+Furkó nem ment bika ütni, bika nem ment vizet inni, viz nem ment tüzet
+oltani, tűz nem ment falu égetni, falu nem ment farkas kergetni, farkas
+nem ment kecske enni, kecske nem ment kóró rágni, a kóró még se’
+ringatta a kis madarat.
+
+Megint ment mendegélt a kis madár, talált egy férget.
+
+– Féreg fúrd ki a furkót.
+
+Féreg nem ment furkót f</code></pre>
+</div>
+</div>
+<p>Like always, we’ll start by connecting to ChatGPT, build a prompt, then send it over to be analyzed.</p>
+<div class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ONCE UPON A TIME THERE WAS A DISEASE AND A LITTLE BIRD.
+
+Once upon a time, in a land far away, there was a little bird. This little bird got very bored and landed on a branch:
+
+- Little branch, rock me to sleep!
+
+- I don't rock any little birds!
+
+The little bird got angry and flew away. As it wandered, it found a goat:
+
+- Goat, chew on the branch!
+
+The goat didn't chew on the branch, and the branch still didn't rock the little bird. The little bird continued on its way and found a wolf:
+
+- Wolf, eat the goat!
+
+The wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a village:
+
+- Village, chase away the wolf!
+
+The village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a fire:
+
+- Fire, burn down the village.
+
+The fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found water:
+
+- Water, put out the fire.
+
+The water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a bull:
+
+- Bull, drink the water!
+
+The bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a pitchfork.
+
+- Pitchfork, kill the bull.
+
+The pitchfork didn't kill the bull, the bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a worm.
+
+- Worm, dig into the pitchfork.
+
+The worm didn't dig into the pitchfork, the pitchfork didn't kill the bull, the bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
+
+The little bird continued on its way and found a rooster.
+
+- Rooster, pick up the worm.
+
+The rooster ran, picked up the worm, the worm ran, gnawed on the pitchfork, the pitchfork ran, hit the bull, the bull ran, drank the water, the water ran, put out the fire, the fire ran, burned the village, the village ran, chased the wolf, the wolf ran, ate the goat, the goat ran, chewed on the branch, and the branch finally rocked the little bird.
+
+If it still hadn't rocked the little bird, my story would have continued.</code></pre>
+</div>
+</div>
+<p>What happens if we try with <code>gpt-4</code> instead of <code>gpt-3.5-turbo</code>?</p>
+<div class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-4"</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transcription-speech-to-text" class="level2">
+<h2 class="anchored" data-anchor-id="transcription-speech-to-text">Transcription (speech to text)</h2>
+<p><a href="https://github.com/openai/whisper">Whisper</a> is a transcription engine. You can use the code below to read from an mp3, or you can <a href="https://huggingface.co/spaces/openai/whisper">try the interactive version</a>.</p>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> whisper</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> whisper.load_model(<span class="st">"base"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> model.transcribe(<span class="st">"sample-audio.mp3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/soma/.pyenv/versions/3.10.3/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/whisper/transcribe.py:114: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">"text"</span>][:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Okay, I was wondering if you could tell me a little bit about the program. What exactly goes on? Okay, well basically it's an intensive program designed to last four weeks, each session is four weeks long, although we do have two sessions in 1996 that will be two weeks long. But our general four weeks session involves seven hours of contact each day of Spanish. It involves starting at nine o'clock in the morning with three hours of grammar instruction. And then it's followed immediately by an hour of group conversation with the same instructor, same class, but we have extensive gardens here at the Institute and so students will usually go out to a garden setting because it's a little more comfortable. And then after a break for lunch, students return and we have a complete flip of instruction in that instead of textbook and clinical type instruction, we have hands on and we offer workshops in Mejibak's drop leaving, regional cooking of Wahaka at Donpas-Nal pottery. And if we have larg</code></pre>
+</div>
+</div>
+<p>In the example above, we use the <code>base</code> model. You can see <a href="https://github.com/openai/whisper#available-models-and-languages">the different model versions here</a>, which vary in their accuracy and knowledge of non-English languages.</p>
+</section>
+<section id="reading-text-out-loud-text-to-speech" class="level2">
+<h2 class="anchored" data-anchor-id="reading-text-out-loud-text-to-speech">Reading text out loud (text to speech)</h2>
+<p><a href="https://huggingface.co/models?pipeline_tag=text-to-speech&amp;sort=trending">Text to speech models on HuggingFace</a>. They… are mostly not that good. Usually.</p>
+<section id="voice-cloning" class="level3">
+<h3 class="anchored" data-anchor-id="voice-cloning">Voice cloning</h3>
+<p>I’m just going to send you to <a href="https://elevenlabs.io/">ElevenLabs</a>. I showed you an example in class, but I don’t have an interactive one here!</p>
+</section>
+</section>
+<section id="text-classification" class="level2">
+<h2 class="anchored" data-anchor-id="text-classification">Text classification</h2>
+<section id="zero-shot-classification" class="level3">
+<h3 class="anchored" data-anchor-id="zero-shot-classification">Zero-shot classification</h3>
+<p>Because large language models are remarkably well-read, they’re very good at categorizing content for you. If your categories are nuanced and specific it’s a little more trouble, but if you’re categorizing content across <em>broad categories</em> it should do a great job.</p>
+<p>Here’s a basic example of how it works:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: A Bill to Regulate the Sulfur Emissions of Coal-Fired Energy</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">Plants in the State of New York.</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Instead of writing the big long <code>"Categorize the following text..."</code> prompt for <em>every single bill</em>, we can also use Python’s <code>.format</code>. It allows us to write the prompt once, then fill in the blanks for the part that changes each time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is super convenient if we want to categorize many things! For example, you might use a loop…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>bills <span class="op">=</span> [</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bill <span class="kw">in</span> bills:</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>bill)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bill, <span class="st">"is"</span>, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>…or if you have a pandas DataFrame, you can use <code>.apply</code> and build a new column for your category!</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_colwidth"</span>, <span class="dv">500</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>: [</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A Bill to Allow Additional Refugees In Upstate New York</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A Bill to Close Down Coal-fired Power Plants</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>A Bill to Banning Assault Rifles at Public Events</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_prediction(row):</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> row[<span class="st">'title'</span>]</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>text)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Send each row to make_prediction and store the category in a new column</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'predicted_category'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(make_prediction, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It’s like magic!</p>
+</section>
+<section id="gpt-in-google-sheets" class="level3">
+<h3 class="anchored" data-anchor-id="gpt-in-google-sheets">GPT in Google Sheets</h3>
+<p>You can also do this with GPT <a href="https://www.makeuseof.com/how-use-chatgpt-google-sheets/">in Google Sheets</a> instead of relying on code.</p>
+</section>
+<section id="few-shot-classification" class="level3">
+<h3 class="anchored" data-anchor-id="few-shot-classification">Few-shot classification</h3>
+<p>Sometimes your classifier might not do a great job. It might be a topic the LLM doesn’t know much about, you might be asking for nuance it doesn’t have out of the box, or a million and one other things might be going wrong. In those cases, it’s useful to try <strong>few-shot classification</strong>.</p>
+<p>In the same way that zero-shot classification takes zero examples going in, few-shot classification takes… a few examples!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about immigration</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">IMMIGRATION</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about gun control</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="st">GUN CONTROL</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="custom-classifiers" class="level3">
+<h3 class="anchored" data-anchor-id="custom-classifiers">Custom classifiers</h3>
+<p>You can also use <a href="https://ui.autotrain.huggingface.co/">Hugging Face AutoTrain</a> to train your own classifiers. Instead of trusting that the model has enough information about the world to make a decision, you give it exactly what it needs to know.</p>
+<p>They aren’t necessarily worse or better: they’re just more work on your end because you have to manually label each category to show it what you mean. Instead of “few shot” it’s “a whole lot of shots” - probably hundreds!</p>
+</section>
+</section>
+<section id="format-shifting" class="level2">
+<h2 class="anchored" data-anchor-id="format-shifting">Format shifting</h2>
+<p>A lot of the power of these models involves format shifting, changing from one format to another. Audio, text, images, video.</p>
+<ul>
+<li><strong>Video to image:</strong> then analyze the images</li>
+<li><strong>Audio to text:</strong> transcription</li>
+<li><strong>Text to image:</strong> I think this one is immoral. Art is resistant to errors, so it’s much easier to just rip off someone’s style. It’s also trained on peoples’ work in a way that’s far more obviously inappropriate than text models.</li>
+<li><strong>Image to text:</strong> accessibility and research</li>
+</ul>
+<p>If you have a lot of content in one category, it’s worth thinking about what you can do to convert it into another category and re-use it.</p>
+</section>
+<section id="image-models" class="level2">
+<h2 class="anchored" data-anchor-id="image-models">Image models</h2>
+<p>The three major things you can do with images is:</p>
+<ol type="1">
+<li>Categorize your images</li>
+<li>Detect objects in the images</li>
+<li>Separate your image into pieces (pixel counting)</li>
+</ol>
+<p>If you use <a href="https://ui.autotrain.huggingface.co/">HuggingFace AutoTrain</a>, you can easily make your own models! I made one <a href="https://huggingface.co/wendys-llc/amber-mines">to classify illegal amber mines</a> based on <a href="https://texty.org.ua/d/2018/amber_eng/">Texty’s work</a>.</p>
+<div class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(<span class="st">"image-classification"</span>, model<span class="op">=</span><span class="st">"wendys-llc/amber-mines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4404f7a46af444078ca9ac0b71209edc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"8e4143a5dbf149448a6cfc2da7393442","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"454ab3966b194bfc91ff8e3b820e54cc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<p>What does the model think about this image?</p>
+<p><img src="amber-sample-1.png" class="img-fluid"></p>
+<div class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-1.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="65">
+<pre><code>[{'score': 0.9965369701385498, 'label': 'negative'},
+ {'score': 0.003463044995442033, 'label': 'positive'}]</code></pre>
+</div>
+</div>
+<p>How about this one?</p>
+<p><img src="amber-sample-1.png" class="img-fluid"></p>
+<div class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-2.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="66">
+<pre><code>[{'score': 0.9864670634269714, 'label': 'positive'},
+ {'score': 0.013532912358641624, 'label': 'negative'}]</code></pre>
+</div>
+</div>
+<section id="object-detection" class="level3">
+<h3 class="anchored" data-anchor-id="object-detection">Object detection</h3>
+<p><a href="https://huggingface.co/spaces/wendys-llc/OWL-ViT">Here is an example of object detection</a></p>
+<p>You can combine this with a large language model to ask questions of images. “Are there cats in this image?” It’s like a more flexible classifier – but with limitations about what the model knows about.</p>
+</section>
+<section id="semantic-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="semantic-segmentation">Semantic segmentation</h3>
+<p><a href="https://huggingface.co/spaces/thiagohersan/maskformer-satellite-trees-gradio">Here is an example of semantic segmentation</a></p>
+<p>How much of this image is pavement? Or grass? Or trees? Or cars?</p>
+<p>Not too useful with normal imagery, but very useful for satellite or aerial imagery.</p>
+</section>
+<section id="panoptic-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="panoptic-segmentation">Panoptic segmentation</h3>
+<p><a href="https://huggingface.co/spaces/wendys-llc/panoptic-segment-anything">Here is an example of panoptic segmentation</a></p>
+<p>Panoptic segmentation does both object detection <em>and</em> semantic segmentation.</p>
+</section>
+</section>
+<section id="semantic-search" class="level2">
+<h2 class="anchored" data-anchor-id="semantic-search">Semantic search</h2>
+<p>A combination of semantic search and keyword matching usually outperforms semantic search by itself.</p>
+<p>Transcribing all of your interviews and then doing searches across them is a beautiful thing.</p>
+<p>Give <a href="https://github.com/freedmand/semantra">Semantra</a> a try to run it locally.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q sentence<span class="op">-</span>transformers sentencepiece</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"This is an example sentence"</span>]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(embeddings[<span class="dv">0</span>][:<span class="dv">50</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 0.0676569   0.06349581  0.0487131   0.07930496  0.03744796  0.00265277
+  0.03937485 -0.00709837  0.0593615   0.03153696  0.06009803 -0.05290522
+  0.04060676 -0.02593078  0.02984274  0.00112689  0.07351495 -0.05038185
+ -0.12238666  0.02370274  0.02972649  0.04247681  0.0256338   0.00199517
+ -0.05691912 -0.02715985 -0.03290359  0.06602488  0.11900704 -0.04587924
+ -0.07262138 -0.03258408  0.05234135  0.04505523  0.00825302  0.03670237
+ -0.01394151  0.06539196 -0.02642729  0.00020634 -0.01366437 -0.03628108
+ -0.0195043  -0.02897387  0.03942709 -0.08840913  0.00262434  0.01367143
+  0.04830637 -0.03115652]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Molly ate a fish"</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jen consumed a carp"</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I would like to sell you a house"</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Я пытаюсь купить дачу"</span>, <span class="co"># I'm trying to buy a summer home</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"J'aimerais vous louer un grand appartement"</span>, <span class="co"># I would like to rent a large apartment to you</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"This is a wonderful investment opportunity"</span>,</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Это прекрасная возможность для инвестиций"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C'est une merveilleuse opportunité d'investissement"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"これは素晴らしい投資機会です"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"野球はあなたが思うよりも面白いことがあります"</span>, <span class="co"># baseball can be more interesting than you think</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baseball can be interesting than you'd think"</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="73">
+<style type="text/css">
+#T_ed13a_row0_col0, #T_ed13a_row1_col1, #T_ed13a_row2_col2, #T_ed13a_row3_col3, #T_ed13a_row4_col4, #T_ed13a_row5_col5, #T_ed13a_row6_col6, #T_ed13a_row7_col7, #T_ed13a_row8_col8, #T_ed13a_row9_col9, #T_ed13a_row10_col10 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_ed13a_row0_col1, #T_ed13a_row1_col0 {
+  background-color: #4e9ac6;
+  color: #f1f1f1;
+}
+#T_ed13a_row0_col2, #T_ed13a_row0_col8, #T_ed13a_row2_col0, #T_ed13a_row2_col9, #T_ed13a_row8_col0, #T_ed13a_row9_col2 {
+  background-color: #ebe6f2;
+  color: #000000;
+}
+#T_ed13a_row0_col3, #T_ed13a_row3_col0 {
+  background-color: #dddbec;
+  color: #000000;
+}
+#T_ed13a_row0_col4, #T_ed13a_row0_col10, #T_ed13a_row4_col0, #T_ed13a_row5_col8, #T_ed13a_row8_col5, #T_ed13a_row10_col0 {
+  background-color: #ece7f2;
+  color: #000000;
+}
+#T_ed13a_row0_col5, #T_ed13a_row5_col0 {
+  background-color: #f8f1f8;
+  color: #000000;
+}
+#T_ed13a_row0_col6, #T_ed13a_row1_col3, #T_ed13a_row3_col1, #T_ed13a_row6_col0 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_ed13a_row0_col7, #T_ed13a_row7_col0 {
+  background-color: #f7f0f7;
+  color: #000000;
+}
+#T_ed13a_row0_col9, #T_ed13a_row1_col10, #T_ed13a_row2_col6, #T_ed13a_row6_col2, #T_ed13a_row9_col0, #T_ed13a_row10_col1 {
+  background-color: #ede7f2;
+  color: #000000;
+}
+#T_ed13a_row1_col2, #T_ed13a_row2_col1 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_ed13a_row1_col4, #T_ed13a_row4_col1 {
+  background-color: #f1ebf5;
+  color: #000000;
+}
+#T_ed13a_row1_col5, #T_ed13a_row2_col7, #T_ed13a_row5_col1, #T_ed13a_row5_col9, #T_ed13a_row7_col2, #T_ed13a_row9_col5 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_ed13a_row1_col6, #T_ed13a_row6_col1 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_ed13a_row1_col7, #T_ed13a_row4_col10, #T_ed13a_row7_col1, #T_ed13a_row10_col4 {
+  background-color: #f1ebf4;
+  color: #000000;
+}
+#T_ed13a_row1_col8, #T_ed13a_row3_col7, #T_ed13a_row7_col3, #T_ed13a_row8_col1 {
+  background-color: #dedcec;
+  color: #000000;
+}
+#T_ed13a_row1_col9, #T_ed13a_row9_col1 {
+  background-color: #d6d6e9;
+  color: #000000;
+}
+#T_ed13a_row2_col3, #T_ed13a_row3_col2 {
+  background-color: #d2d2e7;
+  color: #000000;
+}
+#T_ed13a_row2_col4, #T_ed13a_row4_col2 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_ed13a_row2_col5, #T_ed13a_row5_col2 {
+  background-color: #88b1d4;
+  color: #000000;
+}
+#T_ed13a_row2_col8, #T_ed13a_row8_col2 {
+  background-color: #eee8f3;
+  color: #000000;
+}
+#T_ed13a_row2_col10, #T_ed13a_row7_col10, #T_ed13a_row10_col2, #T_ed13a_row10_col7 {
+  background-color: #eee9f3;
+  color: #000000;
+}
+#T_ed13a_row3_col4, #T_ed13a_row4_col3 {
+  background-color: #d1d2e6;
+  color: #000000;
+}
+#T_ed13a_row3_col5, #T_ed13a_row5_col3 {
+  background-color: #e3e0ee;
+  color: #000000;
+}
+#T_ed13a_row3_col6, #T_ed13a_row6_col3 {
+  background-color: #69a5cc;
+  color: #f1f1f1;
+}
+#T_ed13a_row3_col8, #T_ed13a_row8_col3 {
+  background-color: #a1bbda;
+  color: #000000;
+}
+#T_ed13a_row3_col9, #T_ed13a_row9_col3 {
+  background-color: #9cb9d9;
+  color: #000000;
+}
+#T_ed13a_row3_col10, #T_ed13a_row10_col3 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_ed13a_row4_col5, #T_ed13a_row5_col4 {
+  background-color: #eae6f1;
+  color: #000000;
+}
+#T_ed13a_row4_col6, #T_ed13a_row6_col4 {
+  background-color: #8fb4d6;
+  color: #000000;
+}
+#T_ed13a_row4_col7, #T_ed13a_row7_col4 {
+  background-color: #3d93c2;
+  color: #f1f1f1;
+}
+#T_ed13a_row4_col8, #T_ed13a_row8_col4 {
+  background-color: #cdd0e5;
+  color: #000000;
+}
+#T_ed13a_row4_col9, #T_ed13a_row9_col4 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_ed13a_row5_col6, #T_ed13a_row6_col5 {
+  background-color: #f3edf5;
+  color: #000000;
+}
+#T_ed13a_row5_col7, #T_ed13a_row7_col5 {
+  background-color: #c1cae2;
+  color: #000000;
+}
+#T_ed13a_row5_col10, #T_ed13a_row10_col5 {
+  background-color: #d9d8ea;
+  color: #000000;
+}
+#T_ed13a_row6_col7, #T_ed13a_row7_col6 {
+  background-color: #acc0dd;
+  color: #000000;
+}
+#T_ed13a_row6_col8, #T_ed13a_row8_col6 {
+  background-color: #b0c2de;
+  color: #000000;
+}
+#T_ed13a_row6_col9, #T_ed13a_row9_col6 {
+  background-color: #abbfdc;
+  color: #000000;
+}
+#T_ed13a_row6_col10, #T_ed13a_row10_col6 {
+  background-color: #f4eef6;
+  color: #000000;
+}
+#T_ed13a_row7_col8, #T_ed13a_row8_col7 {
+  background-color: #a8bedc;
+  color: #000000;
+}
+#T_ed13a_row7_col9, #T_ed13a_row9_col7 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_ed13a_row8_col9, #T_ed13a_row9_col8 {
+  background-color: #3790c0;
+  color: #f1f1f1;
+}
+#T_ed13a_row8_col10, #T_ed13a_row9_col10, #T_ed13a_row10_col8, #T_ed13a_row10_col9 {
+  background-color: #fdf5fa;
+  color: #000000;
+}
+</style>
+
+<table id="T_ed13a" data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_ed13a_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Molly ate a fish</th>
+<th id="T_ed13a_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Jen consumed a carp</th>
+<th id="T_ed13a_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">I would like to sell you a house</th>
+<th id="T_ed13a_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</th>
+<th id="T_ed13a_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</th>
+<th id="T_ed13a_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</th>
+<th id="T_ed13a_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</th>
+<th id="T_ed13a_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</th>
+<th id="T_ed13a_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</th>
+<th id="T_ed13a_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</th>
+<th id="T_ed13a_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_ed13a_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">Molly ate a fish</td>
+<td id="T_ed13a_row0_col0" class="data row0 col0">1.000000</td>
+<td id="T_ed13a_row0_col1" class="data row0 col1">0.526053</td>
+<td id="T_ed13a_row0_col2" class="data row0 col2">0.025476</td>
+<td id="T_ed13a_row0_col3" class="data row0 col3">0.098335</td>
+<td id="T_ed13a_row0_col4" class="data row0 col4">0.020435</td>
+<td id="T_ed13a_row0_col5" class="data row0 col5">-0.065293</td>
+<td id="T_ed13a_row0_col6" class="data row0 col6">0.035801</td>
+<td id="T_ed13a_row0_col7" class="data row0 col7">-0.062506</td>
+<td id="T_ed13a_row0_col8" class="data row0 col8">0.027358</td>
+<td id="T_ed13a_row0_col9" class="data row0 col9">0.017622</td>
+<td id="T_ed13a_row0_col10" class="data row0 col10">0.023445</td>
+</tr>
+<tr class="even">
+<td id="T_ed13a_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">Jen consumed a carp</td>
+<td id="T_ed13a_row1_col0" class="data row1 col0">0.526053</td>
+<td id="T_ed13a_row1_col1" class="data row1 col1">1.000000</td>
+<td id="T_ed13a_row1_col2" class="data row1 col2">0.044178</td>
+<td id="T_ed13a_row1_col3" class="data row1 col3">0.035044</td>
+<td id="T_ed13a_row1_col4" class="data row1 col4">-0.018194</td>
+<td id="T_ed13a_row1_col5" class="data row1 col5">-0.004438</td>
+<td id="T_ed13a_row1_col6" class="data row1 col6">-0.078566</td>
+<td id="T_ed13a_row1_col7" class="data row1 col7">-0.011418</td>
+<td id="T_ed13a_row1_col8" class="data row1 col8">0.090357</td>
+<td id="T_ed13a_row1_col9" class="data row1 col9">0.131507</td>
+<td id="T_ed13a_row1_col10" class="data row1 col10">0.016100</td>
+</tr>
+<tr class="odd">
+<td id="T_ed13a_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">I would like to sell you a house</td>
+<td id="T_ed13a_row2_col0" class="data row2 col0">0.025476</td>
+<td id="T_ed13a_row2_col1" class="data row2 col1">0.044178</td>
+<td id="T_ed13a_row2_col2" class="data row2 col2">1.000000</td>
+<td id="T_ed13a_row2_col3" class="data row2 col3">0.154773</td>
+<td id="T_ed13a_row2_col4" class="data row2 col4">0.083555</td>
+<td id="T_ed13a_row2_col5" class="data row2 col5">0.386736</td>
+<td id="T_ed13a_row2_col6" class="data row2 col6">0.017175</td>
+<td id="T_ed13a_row2_col7" class="data row2 col7">-0.006744</td>
+<td id="T_ed13a_row2_col8" class="data row2 col8">0.010857</td>
+<td id="T_ed13a_row2_col9" class="data row2 col9">0.025510</td>
+<td id="T_ed13a_row2_col10" class="data row2 col10">0.006353</td>
+</tr>
+<tr class="even">
+<td id="T_ed13a_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</td>
+<td id="T_ed13a_row3_col0" class="data row3 col0">0.098335</td>
+<td id="T_ed13a_row3_col1" class="data row3 col1">0.035044</td>
+<td id="T_ed13a_row3_col2" class="data row3 col2">0.154773</td>
+<td id="T_ed13a_row3_col3" class="data row3 col3">1.000000</td>
+<td id="T_ed13a_row3_col4" class="data row3 col4">0.159519</td>
+<td id="T_ed13a_row3_col5" class="data row3 col5">0.064379</td>
+<td id="T_ed13a_row3_col6" class="data row3 col6">0.462397</td>
+<td id="T_ed13a_row3_col7" class="data row3 col7">0.092110</td>
+<td id="T_ed13a_row3_col8" class="data row3 col8">0.314708</td>
+<td id="T_ed13a_row3_col9" class="data row3 col9">0.327675</td>
+<td id="T_ed13a_row3_col10" class="data row3 col10">-0.119607</td>
+</tr>
+<tr class="odd">
+<td id="T_ed13a_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</td>
+<td id="T_ed13a_row4_col0" class="data row4 col0">0.020435</td>
+<td id="T_ed13a_row4_col1" class="data row4 col1">-0.018194</td>
+<td id="T_ed13a_row4_col2" class="data row4 col2">0.083555</td>
+<td id="T_ed13a_row4_col3" class="data row4 col3">0.159519</td>
+<td id="T_ed13a_row4_col4" class="data row4 col4">1.000000</td>
+<td id="T_ed13a_row4_col5" class="data row4 col5">0.032253</td>
+<td id="T_ed13a_row4_col6" class="data row4 col6">0.365505</td>
+<td id="T_ed13a_row4_col7" class="data row4 col7">0.566635</td>
+<td id="T_ed13a_row4_col8" class="data row4 col8">0.172406</td>
+<td id="T_ed13a_row4_col9" class="data row4 col9">0.110118</td>
+<td id="T_ed13a_row4_col10" class="data row4 col10">-0.013743</td>
+</tr>
+<tr class="even">
+<td id="T_ed13a_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</td>
+<td id="T_ed13a_row5_col0" class="data row5 col0">-0.065293</td>
+<td id="T_ed13a_row5_col1" class="data row5 col1">-0.004438</td>
+<td id="T_ed13a_row5_col2" class="data row5 col2">0.386736</td>
+<td id="T_ed13a_row5_col3" class="data row5 col3">0.064379</td>
+<td id="T_ed13a_row5_col4" class="data row5 col4">0.032253</td>
+<td id="T_ed13a_row5_col5" class="data row5 col5">1.000000</td>
+<td id="T_ed13a_row5_col6" class="data row5 col6">-0.030322</td>
+<td id="T_ed13a_row5_col7" class="data row5 col7">0.212230</td>
+<td id="T_ed13a_row5_col8" class="data row5 col8">0.023889</td>
+<td id="T_ed13a_row5_col9" class="data row5 col9">-0.002844</td>
+<td id="T_ed13a_row5_col10" class="data row5 col10">0.112804</td>
+</tr>
+<tr class="odd">
+<td id="T_ed13a_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</td>
+<td id="T_ed13a_row6_col0" class="data row6 col0">0.035801</td>
+<td id="T_ed13a_row6_col1" class="data row6 col1">-0.078566</td>
+<td id="T_ed13a_row6_col2" class="data row6 col2">0.017175</td>
+<td id="T_ed13a_row6_col3" class="data row6 col3">0.462397</td>
+<td id="T_ed13a_row6_col4" class="data row6 col4">0.365505</td>
+<td id="T_ed13a_row6_col5" class="data row6 col5">-0.030322</td>
+<td id="T_ed13a_row6_col6" class="data row6 col6">1.000000</td>
+<td id="T_ed13a_row6_col7" class="data row6 col7">0.282414</td>
+<td id="T_ed13a_row6_col8" class="data row6 col8">0.267571</td>
+<td id="T_ed13a_row6_col9" class="data row6 col9">0.285873</td>
+<td id="T_ed13a_row6_col10" class="data row6 col10">-0.040309</td>
+</tr>
+<tr class="even">
+<td id="T_ed13a_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</td>
+<td id="T_ed13a_row7_col0" class="data row7 col0">-0.062506</td>
+<td id="T_ed13a_row7_col1" class="data row7 col1">-0.011418</td>
+<td id="T_ed13a_row7_col2" class="data row7 col2">-0.006744</td>
+<td id="T_ed13a_row7_col3" class="data row7 col3">0.092110</td>
+<td id="T_ed13a_row7_col4" class="data row7 col4">0.566635</td>
+<td id="T_ed13a_row7_col5" class="data row7 col5">0.212230</td>
+<td id="T_ed13a_row7_col6" class="data row7 col6">0.282414</td>
+<td id="T_ed13a_row7_col7" class="data row7 col7">1.000000</td>
+<td id="T_ed13a_row7_col8" class="data row7 col8">0.292651</td>
+<td id="T_ed13a_row7_col9" class="data row7 col9">0.187989</td>
+<td id="T_ed13a_row7_col10" class="data row7 col10">0.006793</td>
+</tr>
+<tr class="odd">
+<td id="T_ed13a_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</td>
+<td id="T_ed13a_row8_col0" class="data row8 col0">0.027358</td>
+<td id="T_ed13a_row8_col1" class="data row8 col1">0.090357</td>
+<td id="T_ed13a_row8_col2" class="data row8 col2">0.010857</td>
+<td id="T_ed13a_row8_col3" class="data row8 col3">0.314708</td>
+<td id="T_ed13a_row8_col4" class="data row8 col4">0.172406</td>
+<td id="T_ed13a_row8_col5" class="data row8 col5">0.023889</td>
+<td id="T_ed13a_row8_col6" class="data row8 col6">0.267571</td>
+<td id="T_ed13a_row8_col7" class="data row8 col7">0.292651</td>
+<td id="T_ed13a_row8_col8" class="data row8 col8">1.000000</td>
+<td id="T_ed13a_row8_col9" class="data row8 col9">0.577265</td>
+<td id="T_ed13a_row8_col10" class="data row8 col10">-0.100630</td>
+</tr>
+<tr class="even">
+<td id="T_ed13a_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</td>
+<td id="T_ed13a_row9_col0" class="data row9 col0">0.017622</td>
+<td id="T_ed13a_row9_col1" class="data row9 col1">0.131507</td>
+<td id="T_ed13a_row9_col2" class="data row9 col2">0.025510</td>
+<td id="T_ed13a_row9_col3" class="data row9 col3">0.327675</td>
+<td id="T_ed13a_row9_col4" class="data row9 col4">0.110118</td>
+<td id="T_ed13a_row9_col5" class="data row9 col5">-0.002844</td>
+<td id="T_ed13a_row9_col6" class="data row9 col6">0.285873</td>
+<td id="T_ed13a_row9_col7" class="data row9 col7">0.187989</td>
+<td id="T_ed13a_row9_col8" class="data row9 col8">0.577265</td>
+<td id="T_ed13a_row9_col9" class="data row9 col9">1.000000</td>
+<td id="T_ed13a_row9_col10" class="data row9 col10">-0.098722</td>
+</tr>
+<tr class="odd">
+<td id="T_ed13a_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</td>
+<td id="T_ed13a_row10_col0" class="data row10 col0">0.023445</td>
+<td id="T_ed13a_row10_col1" class="data row10 col1">0.016100</td>
+<td id="T_ed13a_row10_col2" class="data row10 col2">0.006353</td>
+<td id="T_ed13a_row10_col3" class="data row10 col3">-0.119607</td>
+<td id="T_ed13a_row10_col4" class="data row10 col4">-0.013743</td>
+<td id="T_ed13a_row10_col5" class="data row10 col5">0.112804</td>
+<td id="T_ed13a_row10_col6" class="data row10 col6">-0.040309</td>
+<td id="T_ed13a_row10_col7" class="data row10 col7">0.006793</td>
+<td id="T_ed13a_row10_col8" class="data row10 col8">-0.100630</td>
+<td id="T_ed13a_row10_col9" class="data row10 col9">-0.098722</td>
+<td id="T_ed13a_row10_col10" class="data row10 col10">1.000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/distiluse-base-multilingual-cased-v2'</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="75">
+<style type="text/css">
+#T_d90cb_row0_col0, #T_d90cb_row1_col1, #T_d90cb_row2_col2, #T_d90cb_row3_col3, #T_d90cb_row4_col4, #T_d90cb_row5_col5, #T_d90cb_row6_col6, #T_d90cb_row7_col7, #T_d90cb_row8_col8, #T_d90cb_row9_col9, #T_d90cb_row10_col10 {
+  background-color: #023858;
+  color: #f1f1f1;
+}
+#T_d90cb_row0_col1, #T_d90cb_row1_col0 {
+  background-color: #93b5d6;
+  color: #000000;
+}
+#T_d90cb_row0_col2, #T_d90cb_row1_col2, #T_d90cb_row2_col0, #T_d90cb_row2_col1 {
+  background-color: #e6e2ef;
+  color: #000000;
+}
+#T_d90cb_row0_col3, #T_d90cb_row3_col0, #T_d90cb_row7_col10, #T_d90cb_row10_col7 {
+  background-color: #d4d4e8;
+  color: #000000;
+}
+#T_d90cb_row0_col4, #T_d90cb_row1_col5, #T_d90cb_row1_col7, #T_d90cb_row4_col0, #T_d90cb_row5_col1, #T_d90cb_row7_col1 {
+  background-color: #f3edf5;
+  color: #000000;
+}
+#T_d90cb_row0_col5, #T_d90cb_row5_col0 {
+  background-color: #faf2f8;
+  color: #000000;
+}
+#T_d90cb_row0_col6, #T_d90cb_row0_col7, #T_d90cb_row6_col0, #T_d90cb_row7_col0 {
+  background-color: #faf3f9;
+  color: #000000;
+}
+#T_d90cb_row0_col8, #T_d90cb_row8_col0 {
+  background-color: #fff7fb;
+  color: #000000;
+}
+#T_d90cb_row0_col9, #T_d90cb_row1_col6, #T_d90cb_row6_col1, #T_d90cb_row9_col0 {
+  background-color: #f4edf6;
+  color: #000000;
+}
+#T_d90cb_row0_col10, #T_d90cb_row1_col4, #T_d90cb_row4_col1, #T_d90cb_row10_col0 {
+  background-color: #f0eaf4;
+  color: #000000;
+}
+#T_d90cb_row1_col3, #T_d90cb_row3_col1 {
+  background-color: #c9cee4;
+  color: #000000;
+}
+#T_d90cb_row1_col8, #T_d90cb_row8_col1 {
+  background-color: #fcf4fa;
+  color: #000000;
+}
+#T_d90cb_row1_col9, #T_d90cb_row2_col8, #T_d90cb_row8_col2, #T_d90cb_row9_col1 {
+  background-color: #e9e5f1;
+  color: #000000;
+}
+#T_d90cb_row1_col10, #T_d90cb_row2_col7, #T_d90cb_row7_col2, #T_d90cb_row10_col1 {
+  background-color: #e4e1ef;
+  color: #000000;
+}
+#T_d90cb_row2_col3, #T_d90cb_row3_col2 {
+  background-color: #7dacd1;
+  color: #f1f1f1;
+}
+#T_d90cb_row2_col4, #T_d90cb_row4_col2 {
+  background-color: #2182b9;
+  color: #f1f1f1;
+}
+#T_d90cb_row2_col5, #T_d90cb_row5_col2 {
+  background-color: #e1dfed;
+  color: #000000;
+}
+#T_d90cb_row2_col6, #T_d90cb_row3_col8, #T_d90cb_row6_col2, #T_d90cb_row8_col3, #T_d90cb_row8_col10, #T_d90cb_row10_col8 {
+  background-color: #dad9ea;
+  color: #000000;
+}
+#T_d90cb_row2_col9, #T_d90cb_row3_col7, #T_d90cb_row7_col3, #T_d90cb_row9_col2 {
+  background-color: #d5d5e8;
+  color: #000000;
+}
+#T_d90cb_row2_col10, #T_d90cb_row6_col10, #T_d90cb_row10_col2, #T_d90cb_row10_col6 {
+  background-color: #d6d6e9;
+  color: #000000;
+}
+#T_d90cb_row3_col4, #T_d90cb_row4_col3 {
+  background-color: #96b6d7;
+  color: #000000;
+}
+#T_d90cb_row3_col5, #T_d90cb_row5_col3 {
+  background-color: #d9d8ea;
+  color: #000000;
+}
+#T_d90cb_row3_col6, #T_d90cb_row6_col3 {
+  background-color: #cacee5;
+  color: #000000;
+}
+#T_d90cb_row3_col9, #T_d90cb_row9_col3 {
+  background-color: #e7e3f0;
+  color: #000000;
+}
+#T_d90cb_row3_col10, #T_d90cb_row10_col3 {
+  background-color: #e8e4f0;
+  color: #000000;
+}
+#T_d90cb_row4_col5, #T_d90cb_row4_col7, #T_d90cb_row4_col9, #T_d90cb_row5_col4, #T_d90cb_row7_col4, #T_d90cb_row9_col4 {
+  background-color: #c5cce3;
+  color: #000000;
+}
+#T_d90cb_row4_col6, #T_d90cb_row6_col4 {
+  background-color: #bbc7e0;
+  color: #000000;
+}
+#T_d90cb_row4_col8, #T_d90cb_row8_col4 {
+  background-color: #c8cde4;
+  color: #000000;
+}
+#T_d90cb_row4_col10, #T_d90cb_row10_col4 {
+  background-color: #d3d4e7;
+  color: #000000;
+}
+#T_d90cb_row5_col6, #T_d90cb_row6_col5 {
+  background-color: #034369;
+  color: #f1f1f1;
+}
+#T_d90cb_row5_col7, #T_d90cb_row7_col5 {
+  background-color: #034165;
+  color: #f1f1f1;
+}
+#T_d90cb_row5_col8, #T_d90cb_row6_col8, #T_d90cb_row8_col5, #T_d90cb_row8_col6 {
+  background-color: #03456c;
+  color: #f1f1f1;
+}
+#T_d90cb_row5_col9, #T_d90cb_row9_col5 {
+  background-color: #e5e1ef;
+  color: #000000;
+}
+#T_d90cb_row5_col10, #T_d90cb_row10_col5 {
+  background-color: #d7d6e9;
+  color: #000000;
+}
+#T_d90cb_row6_col7, #T_d90cb_row7_col6 {
+  background-color: #023f64;
+  color: #f1f1f1;
+}
+#T_d90cb_row6_col9, #T_d90cb_row7_col9, #T_d90cb_row9_col6, #T_d90cb_row9_col7 {
+  background-color: #e0deed;
+  color: #000000;
+}
+#T_d90cb_row7_col8, #T_d90cb_row8_col7 {
+  background-color: #034267;
+  color: #f1f1f1;
+}
+#T_d90cb_row8_col9, #T_d90cb_row9_col8 {
+  background-color: #e0dded;
+  color: #000000;
+}
+#T_d90cb_row9_col10, #T_d90cb_row10_col9 {
+  background-color: #045d92;
+  color: #f1f1f1;
+}
+</style>
+
+<table id="T_d90cb" data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_d90cb_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Molly ate a fish</th>
+<th id="T_d90cb_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Jen consumed a carp</th>
+<th id="T_d90cb_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">I would like to sell you a house</th>
+<th id="T_d90cb_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</th>
+<th id="T_d90cb_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</th>
+<th id="T_d90cb_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</th>
+<th id="T_d90cb_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</th>
+<th id="T_d90cb_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</th>
+<th id="T_d90cb_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</th>
+<th id="T_d90cb_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</th>
+<th id="T_d90cb_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_d90cb_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">Molly ate a fish</td>
+<td id="T_d90cb_row0_col0" class="data row0 col0">1.000000</td>
+<td id="T_d90cb_row0_col1" class="data row0 col1">0.358347</td>
+<td id="T_d90cb_row0_col2" class="data row0 col2">0.058340</td>
+<td id="T_d90cb_row0_col3" class="data row0 col3">0.145439</td>
+<td id="T_d90cb_row0_col4" class="data row0 col4">-0.024103</td>
+<td id="T_d90cb_row0_col5" class="data row0 col5">-0.070145</td>
+<td id="T_d90cb_row0_col6" class="data row0 col6">-0.075333</td>
+<td id="T_d90cb_row0_col7" class="data row0 col7">-0.073496</td>
+<td id="T_d90cb_row0_col8" class="data row0 col8">-0.111467</td>
+<td id="T_d90cb_row0_col9" class="data row0 col9">-0.025614</td>
+<td id="T_d90cb_row0_col10" class="data row0 col10">0.001549</td>
+</tr>
+<tr class="even">
+<td id="T_d90cb_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">Jen consumed a carp</td>
+<td id="T_d90cb_row1_col0" class="data row1 col0">0.358347</td>
+<td id="T_d90cb_row1_col1" class="data row1 col1">1.000000</td>
+<td id="T_d90cb_row1_col2" class="data row1 col2">0.059195</td>
+<td id="T_d90cb_row1_col3" class="data row1 col3">0.190241</td>
+<td id="T_d90cb_row1_col4" class="data row1 col4">-0.001941</td>
+<td id="T_d90cb_row1_col5" class="data row1 col5">-0.024359</td>
+<td id="T_d90cb_row1_col6" class="data row1 col6">-0.024816</td>
+<td id="T_d90cb_row1_col7" class="data row1 col7">-0.023295</td>
+<td id="T_d90cb_row1_col8" class="data row1 col8">-0.087019</td>
+<td id="T_d90cb_row1_col9" class="data row1 col9">0.040799</td>
+<td id="T_d90cb_row1_col10" class="data row1 col10">0.067243</td>
+</tr>
+<tr class="odd">
+<td id="T_d90cb_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">I would like to sell you a house</td>
+<td id="T_d90cb_row2_col0" class="data row2 col0">0.058340</td>
+<td id="T_d90cb_row2_col1" class="data row2 col1">0.059195</td>
+<td id="T_d90cb_row2_col2" class="data row2 col2">1.000000</td>
+<td id="T_d90cb_row2_col3" class="data row2 col3">0.418692</td>
+<td id="T_d90cb_row2_col4" class="data row2 col4">0.642746</td>
+<td id="T_d90cb_row2_col5" class="data row2 col5">0.081795</td>
+<td id="T_d90cb_row2_col6" class="data row2 col6">0.118611</td>
+<td id="T_d90cb_row2_col7" class="data row2 col7">0.067805</td>
+<td id="T_d90cb_row2_col8" class="data row2 col8">0.042560</td>
+<td id="T_d90cb_row2_col9" class="data row2 col9">0.144491</td>
+<td id="T_d90cb_row2_col10" class="data row2 col10">0.139300</td>
+</tr>
+<tr class="even">
+<td id="T_d90cb_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</td>
+<td id="T_d90cb_row3_col0" class="data row3 col0">0.145439</td>
+<td id="T_d90cb_row3_col1" class="data row3 col1">0.190241</td>
+<td id="T_d90cb_row3_col2" class="data row3 col2">0.418692</td>
+<td id="T_d90cb_row3_col3" class="data row3 col3">1.000000</td>
+<td id="T_d90cb_row3_col4" class="data row3 col4">0.351605</td>
+<td id="T_d90cb_row3_col5" class="data row3 col5">0.120679</td>
+<td id="T_d90cb_row3_col6" class="data row3 col6">0.184644</td>
+<td id="T_d90cb_row3_col7" class="data row3 col7">0.144633</td>
+<td id="T_d90cb_row3_col8" class="data row3 col8">0.115598</td>
+<td id="T_d90cb_row3_col9" class="data row3 col9">0.050505</td>
+<td id="T_d90cb_row3_col10" class="data row3 col10">0.046084</td>
+</tr>
+<tr class="odd">
+<td id="T_d90cb_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</td>
+<td id="T_d90cb_row4_col0" class="data row4 col0">-0.024103</td>
+<td id="T_d90cb_row4_col1" class="data row4 col1">-0.001941</td>
+<td id="T_d90cb_row4_col2" class="data row4 col2">0.642746</td>
+<td id="T_d90cb_row4_col3" class="data row4 col3">0.351605</td>
+<td id="T_d90cb_row4_col4" class="data row4 col4">1.000000</td>
+<td id="T_d90cb_row4_col5" class="data row4 col5">0.203307</td>
+<td id="T_d90cb_row4_col6" class="data row4 col6">0.238716</td>
+<td id="T_d90cb_row4_col7" class="data row4 col7">0.204762</td>
+<td id="T_d90cb_row4_col8" class="data row4 col8">0.195163</td>
+<td id="T_d90cb_row4_col9" class="data row4 col9">0.201317</td>
+<td id="T_d90cb_row4_col10" class="data row4 col10">0.151998</td>
+</tr>
+<tr class="even">
+<td id="T_d90cb_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</td>
+<td id="T_d90cb_row5_col0" class="data row5 col0">-0.070145</td>
+<td id="T_d90cb_row5_col1" class="data row5 col1">-0.024359</td>
+<td id="T_d90cb_row5_col2" class="data row5 col2">0.081795</td>
+<td id="T_d90cb_row5_col3" class="data row5 col3">0.120679</td>
+<td id="T_d90cb_row5_col4" class="data row5 col4">0.203307</td>
+<td id="T_d90cb_row5_col5" class="data row5 col5">1.000000</td>
+<td id="T_d90cb_row5_col6" class="data row5 col6">0.953561</td>
+<td id="T_d90cb_row5_col7" class="data row5 col7">0.964282</td>
+<td id="T_d90cb_row5_col8" class="data row5 col8">0.945246</td>
+<td id="T_d90cb_row5_col9" class="data row5 col9">0.062618</td>
+<td id="T_d90cb_row5_col10" class="data row5 col10">0.133220</td>
+</tr>
+<tr class="odd">
+<td id="T_d90cb_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</td>
+<td id="T_d90cb_row6_col0" class="data row6 col0">-0.075333</td>
+<td id="T_d90cb_row6_col1" class="data row6 col1">-0.024816</td>
+<td id="T_d90cb_row6_col2" class="data row6 col2">0.118611</td>
+<td id="T_d90cb_row6_col3" class="data row6 col3">0.184644</td>
+<td id="T_d90cb_row6_col4" class="data row6 col4">0.238716</td>
+<td id="T_d90cb_row6_col5" class="data row6 col5">0.953561</td>
+<td id="T_d90cb_row6_col6" class="data row6 col6">1.000000</td>
+<td id="T_d90cb_row6_col7" class="data row6 col7">0.968368</td>
+<td id="T_d90cb_row6_col8" class="data row6 col8">0.944719</td>
+<td id="T_d90cb_row6_col9" class="data row6 col9">0.084221</td>
+<td id="T_d90cb_row6_col10" class="data row6 col10">0.136699</td>
+</tr>
+<tr class="even">
+<td id="T_d90cb_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</td>
+<td id="T_d90cb_row7_col0" class="data row7 col0">-0.073496</td>
+<td id="T_d90cb_row7_col1" class="data row7 col1">-0.023295</td>
+<td id="T_d90cb_row7_col2" class="data row7 col2">0.067805</td>
+<td id="T_d90cb_row7_col3" class="data row7 col3">0.144633</td>
+<td id="T_d90cb_row7_col4" class="data row7 col4">0.204762</td>
+<td id="T_d90cb_row7_col5" class="data row7 col5">0.964282</td>
+<td id="T_d90cb_row7_col6" class="data row7 col6">0.968368</td>
+<td id="T_d90cb_row7_col7" class="data row7 col7">1.000000</td>
+<td id="T_d90cb_row7_col8" class="data row7 col8">0.959357</td>
+<td id="T_d90cb_row7_col9" class="data row7 col9">0.086458</td>
+<td id="T_d90cb_row7_col10" class="data row7 col10">0.146568</td>
+</tr>
+<tr class="odd">
+<td id="T_d90cb_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</td>
+<td id="T_d90cb_row8_col0" class="data row8 col0">-0.111467</td>
+<td id="T_d90cb_row8_col1" class="data row8 col1">-0.087019</td>
+<td id="T_d90cb_row8_col2" class="data row8 col2">0.042560</td>
+<td id="T_d90cb_row8_col3" class="data row8 col3">0.115598</td>
+<td id="T_d90cb_row8_col4" class="data row8 col4">0.195163</td>
+<td id="T_d90cb_row8_col5" class="data row8 col5">0.945246</td>
+<td id="T_d90cb_row8_col6" class="data row8 col6">0.944719</td>
+<td id="T_d90cb_row8_col7" class="data row8 col7">0.959357</td>
+<td id="T_d90cb_row8_col8" class="data row8 col8">1.000000</td>
+<td id="T_d90cb_row8_col9" class="data row8 col9">0.091451</td>
+<td id="T_d90cb_row8_col10" class="data row8 col10">0.115392</td>
+</tr>
+<tr class="even">
+<td id="T_d90cb_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</td>
+<td id="T_d90cb_row9_col0" class="data row9 col0">-0.025614</td>
+<td id="T_d90cb_row9_col1" class="data row9 col1">0.040799</td>
+<td id="T_d90cb_row9_col2" class="data row9 col2">0.144491</td>
+<td id="T_d90cb_row9_col3" class="data row9 col3">0.050505</td>
+<td id="T_d90cb_row9_col4" class="data row9 col4">0.201317</td>
+<td id="T_d90cb_row9_col5" class="data row9 col5">0.062618</td>
+<td id="T_d90cb_row9_col6" class="data row9 col6">0.084221</td>
+<td id="T_d90cb_row9_col7" class="data row9 col7">0.086458</td>
+<td id="T_d90cb_row9_col8" class="data row9 col8">0.091451</td>
+<td id="T_d90cb_row9_col9" class="data row9 col9">1.000000</td>
+<td id="T_d90cb_row9_col10" class="data row9 col10">0.839617</td>
+</tr>
+<tr class="odd">
+<td id="T_d90cb_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</td>
+<td id="T_d90cb_row10_col0" class="data row10 col0">0.001549</td>
+<td id="T_d90cb_row10_col1" class="data row10 col1">0.067243</td>
+<td id="T_d90cb_row10_col2" class="data row10 col2">0.139300</td>
+<td id="T_d90cb_row10_col3" class="data row10 col3">0.046084</td>
+<td id="T_d90cb_row10_col4" class="data row10 col4">0.151998</td>
+<td id="T_d90cb_row10_col5" class="data row10 col5">0.133220</td>
+<td id="T_d90cb_row10_col6" class="data row10 col6">0.136699</td>
+<td id="T_d90cb_row10_col7" class="data row10 col7">0.146568</td>
+<td id="T_d90cb_row10_col8" class="data row10 col8">0.115392</td>
+<td id="T_d90cb_row10_col9" class="data row10 col9">0.839617</td>
+<td id="T_d90cb_row10_col10" class="data row10 col10">1.000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="searching-through-documents-with-semantic-search" class="level3">
+<h3 class="anchored" data-anchor-id="searching-through-documents-with-semantic-search">Searching through documents with semantic search</h3>
+<p>What does this allow you to do?</p>
+<div class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'ai-report.pdf'</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="77">
+<pre><code>90</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running Chroma using direct local API.
+Using DuckDB in-memory for database. Data will be transient.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>db.similarity_search(<span class="st">"losing jobs"</span>, k<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="83">
+<pre><code>[Document(lc_kwargs={'page_content': '7\n12 Cultural resistance and fears of job displacement and scepticism of AI technologies \ncannot be discounted. \n13 Across the board, respondents noted that mitigating AI integration challenges requires \nbridging knowledge gaps among various teams in the newsroom. Similarly, cross-\ndepartment collaboration was seen as necessary for achieving effective AI adoption.\n14 The challenge of keeping pace with the rapid evolution of AI was consistently \nmentioned throughout the survey.\n15 About 40% of respondents said their approach to AI has not changed over the past \nfew years, either because they are still in the beginning of their AI journey or because \nAI integration remains limited in their newsrooms. Concurrently, around a 1/4 said \ntheir organisation’s approach to AI has evolved; they have gained hands-on experience \nthat helps them think more realistically about AI.\n16 More than 60% of respondents are concerned about the ethical implications of AI \nintegration for editorial quality and other aspects of journalism. Journalists are trying \nto figure out how to integrate AI technologies in their work upholding journalistic \nvalues like accuracy, fairness, and transparency. \n17 Respondents called for transparency from the designers of AI systems and \ntechnology companies, and the users, namely newsrooms, with their audiences. \n18 Journalists and mediamakers continued to stress the need for a ‘human in the loop \napproach,’ in line with the results in our 2019 survey.\n19 There are fears that AI technologies would further commercialise journalism,  \nboosting poor quality and polarising content, leading to a further decline in public  \ntrust in journalism.\n20 Tech companies are driving innovation in AI and other technologies, but survey \nparticipants voiced concerns about their profit-driven nature, the concentration of \npower they enjoy, and their lack of transparency.\n21 Around 80% of the respondents expect a larger role for AI in their newsrooms  \nin the future. \n22 Survey participants expect AI to influence four main areas:\n 1  Fact-checking and disinformation analysis\n 2  Content personalisation and automation\n 3  Text summarisation and generation\n 4   Using chatbots to conduct preliminary interviews and gauge public sentiment  \non issues', 'metadata': {'source': 'ai-report.pdf', 'page': 7}}, page_content='7\n12 Cultural resistance and fears of job displacement and scepticism of AI technologies \ncannot be discounted. \n13 Across the board, respondents noted that mitigating AI integration challenges requires \nbridging knowledge gaps among various teams in the newsroom. Similarly, cross-\ndepartment collaboration was seen as necessary for achieving effective AI adoption.\n14 The challenge of keeping pace with the rapid evolution of AI was consistently \nmentioned throughout the survey.\n15 About 40% of respondents said their approach to AI has not changed over the past \nfew years, either because they are still in the beginning of their AI journey or because \nAI integration remains limited in their newsrooms. Concurrently, around a 1/4 said \ntheir organisation’s approach to AI has evolved; they have gained hands-on experience \nthat helps them think more realistically about AI.\n16 More than 60% of respondents are concerned about the ethical implications of AI \nintegration for editorial quality and other aspects of journalism. Journalists are trying \nto figure out how to integrate AI technologies in their work upholding journalistic \nvalues like accuracy, fairness, and transparency. \n17 Respondents called for transparency from the designers of AI systems and \ntechnology companies, and the users, namely newsrooms, with their audiences. \n18 Journalists and mediamakers continued to stress the need for a ‘human in the loop \napproach,’ in line with the results in our 2019 survey.\n19 There are fears that AI technologies would further commercialise journalism,  \nboosting poor quality and polarising content, leading to a further decline in public  \ntrust in journalism.\n20 Tech companies are driving innovation in AI and other technologies, but survey \nparticipants voiced concerns about their profit-driven nature, the concentration of \npower they enjoy, and their lack of transparency.\n21 Around 80% of the respondents expect a larger role for AI in their newsrooms  \nin the future. \n22 Survey participants expect AI to influence four main areas:\n 1  Fact-checking and disinformation analysis\n 2  Content personalisation and automation\n 3  Text summarisation and generation\n 4   Using chatbots to conduct preliminary interviews and gauge public sentiment  \non issues', metadata={'source': 'ai-report.pdf', 'page': 7}),
+ Document(lc_kwargs={'page_content': '5555AI could become a crossroad and an insurmountable hurdle for news \norganisations that do not realise that AI is just a new aspect of the constant \nprogress of digital transformation. … some news organisations have been very slow \nin digitising their business models (or haven’t even succeeded in doing so) – now \nthe next shock is just around the corner. \nSeveral newsrooms expected AI to make them “leaner,” as an increasing number of tasks \nbecome automated:\nIt may mean job losses because the work is currently being done by say five \npeople, and may only need one person. \nIt will have a drastic impact…If machines can write stories, edit them and \ndistribute them, it follows that newsrooms have to be leaner. \nOthers said that AI will not “replace jobs.” Rather, AI will redefine the role of journalists; \n“steering AI… requires new competencies and new functions.” \nAnother respondent said: \nWe believe AI isn’t a threat to jobs. But people who learn to effectively use AI to \nleverage their work will be in demand, and soon many roles will expect people to be \nable to use these tools. \nThe need for a balancing act between tech and journalism, a theme that emerged in our \n2019 survey, remains imperative to a future where AI technologies are leveraged to serve \njournalism and its mission:\nIt will involve a rethinking of the entire workflow and, at least during the adoption \nphase, additional work to adapt to this new approach. There will be more \ncollaboration and intersection between journalistic and technical figures. \nOthers worried that the reliance on AI technologies will undermine journalistic values, for \ninstance by pushing polarising content. This in turn would reduce public trust in journalism, \nwhich many think is in decline as noted prev iously:', 'metadata': {'source': 'ai-report.pdf', 'page': 55}}, page_content='5555AI could become a crossroad and an insurmountable hurdle for news \norganisations that do not realise that AI is just a new aspect of the constant \nprogress of digital transformation. … some news organisations have been very slow \nin digitising their business models (or haven’t even succeeded in doing so) – now \nthe next shock is just around the corner. \nSeveral newsrooms expected AI to make them “leaner,” as an increasing number of tasks \nbecome automated:\nIt may mean job losses because the work is currently being done by say five \npeople, and may only need one person. \nIt will have a drastic impact…If machines can write stories, edit them and \ndistribute them, it follows that newsrooms have to be leaner. \nOthers said that AI will not “replace jobs.” Rather, AI will redefine the role of journalists; \n“steering AI… requires new competencies and new functions.” \nAnother respondent said: \nWe believe AI isn’t a threat to jobs. But people who learn to effectively use AI to \nleverage their work will be in demand, and soon many roles will expect people to be \nable to use these tools. \nThe need for a balancing act between tech and journalism, a theme that emerged in our \n2019 survey, remains imperative to a future where AI technologies are leveraged to serve \njournalism and its mission:\nIt will involve a rethinking of the entire workflow and, at least during the adoption \nphase, additional work to adapt to this new approach. There will be more \ncollaboration and intersection between journalistic and technical figures. \nOthers worried that the reliance on AI technologies will undermine journalistic values, for \ninstance by pushing polarising content. This in turn would reduce public trust in journalism, \nwhich many think is in decline as noted prev iously:', metadata={'source': 'ai-report.pdf', 'page': 55}),
+ Document(lc_kwargs={'page_content': 'Other than language challenges, very few respondents mentioned failures in specific \nAI-applications. However, when discussed, some respondents attributed any failures to \norganisational issues, rather than to technical limitations: \nThe biggest failure has been slow progression on already identified use cases \nbecause of organisational issues, lack of focus and resources. \nFor some of our third-party available machine learning offerings, we found that \nwe didn’t have a strong onboarding process or clear explanations, so uptake has \nbeen slower than anticipated. \nOne respondent explained how their organisation decided to discontinue their work on \nan “automated service to write short stories about companies performance in the stock \nmarket,” because it did not gain popularity with the audience:\n[It] did not create enough user value (the users rather looked at the stock graph), \nand when the pandemic hit and all stocks went south, our thresholds were reached \nfor almost all companies spamming our users. \n24\n24', 'metadata': {'source': 'ai-report.pdf', 'page': 24}}, page_content='Other than language challenges, very few respondents mentioned failures in specific \nAI-applications. However, when discussed, some respondents attributed any failures to \norganisational issues, rather than to technical limitations: \nThe biggest failure has been slow progression on already identified use cases \nbecause of organisational issues, lack of focus and resources. \nFor some of our third-party available machine learning offerings, we found that \nwe didn’t have a strong onboarding process or clear explanations, so uptake has \nbeen slower than anticipated. \nOne respondent explained how their organisation decided to discontinue their work on \nan “automated service to write short stories about companies performance in the stock \nmarket,” because it did not gain popularity with the audience:\n[It] did not create enough user value (the users rather looked at the stock graph), \nand when the pandemic hit and all stocks went south, our thresholds were reached \nfor almost all companies spamming our users. \n24\n24', metadata={'source': 'ai-report.pdf', 'page': 24}),
+ Document(lc_kwargs={'page_content': '33Newsrooms were not entirely sure which skillset(s) to look for in technical personnel . \nNewsrooms with several years of experience with AI integration in the newsroom \nmentioned specifically the challenge of achieving compatibility and interoperability with \nexisting systems and platforms: \nThe main blocker to deploying an ML-based tagging system, for example, is \ntechnical; it needs to be integrated with other systems. \nTested tools have to be implemented into current business structures, which \nrequires quite a lot of development and testing. \nThese responses highlight the huge strides some newsrooms have made in AI adoption \nat an institutional level. In our 2019 report, many of the respondents, including early \nadopters, were at the beginning of their AI journeys. Technical challenges focused on \nwhich projects to prioritise, how to demystify AI and providing general AI literacy training \nto personnel.\nThe responses also highlight a disparity between smaller, emerging newsrooms in Global \nSouth countries on the one hand, and large, well-resourced, more experienced news \norganisations in Global North countries. While responses by the former focused on finding \nthe resources to hire the technical experience needed, the latter have already deployed AI \ntechnologies in various areas and are now focused on achieving interoperability:\nWe are a mid-sized regional nonprofit startup with a strong engineering team \nand an innovative organisational culture… But, we have nowhere near the technical \npower of large national organisations. \nMitigating AI integration challenges goes beyond hiring the right technical staff. It \nrequires bridging knowledge gaps that exist among various teams in the newsroom, \na challenge that is more consistent across the board. Responses reflected a need to \nenhance AI literacy and technical skills among journalists and technical staff alike: \n[We] have varying levels of understanding on what AI is. In a team of about 20 \npeople, less than a ¼ have training on it and we have yet to get everybody up to \nspeed. I think my organisation will be equipped to take advantage of its potential \nonce we are all on the same page.', 'metadata': {'source': 'ai-report.pdf', 'page': 33}}, page_content='33Newsrooms were not entirely sure which skillset(s) to look for in technical personnel . \nNewsrooms with several years of experience with AI integration in the newsroom \nmentioned specifically the challenge of achieving compatibility and interoperability with \nexisting systems and platforms: \nThe main blocker to deploying an ML-based tagging system, for example, is \ntechnical; it needs to be integrated with other systems. \nTested tools have to be implemented into current business structures, which \nrequires quite a lot of development and testing. \nThese responses highlight the huge strides some newsrooms have made in AI adoption \nat an institutional level. In our 2019 report, many of the respondents, including early \nadopters, were at the beginning of their AI journeys. Technical challenges focused on \nwhich projects to prioritise, how to demystify AI and providing general AI literacy training \nto personnel.\nThe responses also highlight a disparity between smaller, emerging newsrooms in Global \nSouth countries on the one hand, and large, well-resourced, more experienced news \norganisations in Global North countries. While responses by the former focused on finding \nthe resources to hire the technical experience needed, the latter have already deployed AI \ntechnologies in various areas and are now focused on achieving interoperability:\nWe are a mid-sized regional nonprofit startup with a strong engineering team \nand an innovative organisational culture… But, we have nowhere near the technical \npower of large national organisations. \nMitigating AI integration challenges goes beyond hiring the right technical staff. It \nrequires bridging knowledge gaps that exist among various teams in the newsroom, \na challenge that is more consistent across the board. Responses reflected a need to \nenhance AI literacy and technical skills among journalists and technical staff alike: \n[We] have varying levels of understanding on what AI is. In a team of about 20 \npeople, less than a ¼ have training on it and we have yet to get everybody up to \nspeed. I think my organisation will be equipped to take advantage of its potential \nonce we are all on the same page.', metadata={'source': 'ai-report.pdf', 'page': 33})]</code></pre>
+</div>
+</div>
+</section>
+<section id="specifying-details" class="level3">
+<h3 class="anchored" data-anchor-id="specifying-details">Specifying details</h3>
+<p>Let’s get a little more specific!</p>
+<div class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> TextLoader</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> TextLoader(<span class="st">'hungarian-folktales.txt'</span>)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>documents <span class="op">=</span> loader.load()</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>text_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>, chunk_overlap<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> text_splitter.split_documents(documents)</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="88">
+<pre><code>453</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running Chroma using direct local API.
+Using DuckDB in-memory for database. Data will be transient.
+Exiting: Cleaning up .chroma directory</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="97">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> db.similarity_search(<span class="st">"weddings at a festival with loud music"</span>, k<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match <span class="kw">in</span> matches:</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(match.page_content)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eltelt az egy hónap, elérkezett az esküvő napja, ott volt a sok vendég,
+köztök a boltos is, csak a vőlegényt meg a menyasszonyt nem lehetett
+látni. Bekövetkezett az ebéd ideje is, mindnyájan vígan ültek le az
+asztalhoz, elkezdtek enni. Az volt a szokás a gróf házánál, hogy minden
+embernek egy kis külön tálban vitték az ételt; a boltos amint a maga
+táljából szedett levest, hát csak alig tudta megenni, olyan sótalan
+volt, nézett körül só után, de nem volt az egész asztalon; a második
+étel még sótalanabb volt, a harmadik meg már olyan volt, hogy hozzá se’
+tudott nyúlni. Kérdezték tőle hogy mért nem eszik? tán valami baja van
+az ételnek? amint ott vallatták, eszébe jutott a lyánya, hogy az neki
+azt mondta, hogy úgy szereti, mint a sót, elkezdett sírni; kérdezték
+aztán tőle, hogy mért sír, akkor elbeszélt mindent, hogy volt neki egy
+lyánya, az egyszer neki azt mondta, hogy úgy szereti mint a sót, ő
+megharagudott érte, elkergette a házától, lám most látja, hogy milyen
+-----</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="retrieval-augmented-generation-smart-chatbots" class="level2">
+<h2 class="anchored" data-anchor-id="retrieval-augmented-generation-smart-chatbots">Retrieval-augmented generation (smart chatbots)</h2>
+<p>Find relevant passages, send them to your chatbot along with your question.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can improve performance by generating potential answers, then also including things similar to potential answers.</p>
+</div>
+</div>
+</div>
+<p>There are a lot of places things can go wrong: segmented poorly or missing context, non-useful embeddings, question not being answered incorrectly. It’s probably best if you just use semantic search to get results and read them yourself!</p>
+</section>
+<section id="expanding-your-skillset" class="level2">
+<h2 class="anchored" data-anchor-id="expanding-your-skillset">Expanding your skillset</h2>
+<p>Lorem ipsum</p>
+</section>
+<section id="contact-me" class="level2">
+<h2 class="anchored" data-anchor-id="contact-me">Contact me</h2>
+<p>Feel free to reach out – I’m more than happy to provide ideas, guidance, lectures, etc etc etc. You can find me via email at <a href="mailto:js4571@columbia.edu">js4571@columbia.edu</a> or on Twitter at <a href="https://twitter.com/dangerscarf"><span class="citation" data-cites="dangerscarf">@dangerscarf</span></a>. I also run two data journalism programs at Columbia: the 12-month <a href="https://journalism.columbia.edu/ms-data-journalism">Data Journalism MS</a> and the <a href="https://ledeprogram.com/">Lede Program</a>, a summer intensive.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
