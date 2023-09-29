@@ -67,10 +67,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Making and breaking AI in the newsroom_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
 
 </head>
@@ -182,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="article-summaries">Article summaries</h2>
 <p>Sometimes you need to write little blurbs for articles: maybe for social posts, front pages, or newsletters.</p>
 <p>Below is a NYTimes article I’m using as an example.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>article <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">A few blocks away from where a 1-year-old boy died, possibly from fentanyl poisoning at his Bronx day care this month, an open-air drug market persists along a trash-strewn underpass.</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -276,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I put together a template that we can use to send the article to GPT. The <code>{text}</code> part gets filled in with whatever we want - in this case it’s the article, but we’ll expand on this in other directions below.</p>
-<div class="cell" data-execution_count="26">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -285,13 +281,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span><span class="st">"This fills in the blank"</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Summarize the article below:
-
-This fills in the blank
-</code></pre>
-</div>
 </div>
 <p>Now let’s do all of the steps:</p>
 <ol type="1">
@@ -300,16 +289,33 @@ This fills in the blank
 <li>Send it over</li>
 </ol>
 <p>Note that if you get an error, make sure you’re run the cell above that creates the article! You need to click it and shift+enter, or press the “Run” button.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="17">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>article)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This gets us an answer, but <em>can we write a better prompt?</em></p>
+<p>Think about asking GPT to use a specific tone, or cheat a little by telling it to copy a publication. You can also set a length, reading level or target audience!</p>
+<p>I also recommend asking your tools for suggestions – you can try asking ChatGPT “how would you describe the writing style of the New York Times? Be detailed.” and use that as a jumping-off point.</p>
+<blockquote class="blockquote">
+<p>Don’t ever feel like your prompt is too long! Check the <a href="https://jamditis.notion.site/Superprompt-EditorBot-for-feedback-on-your-writing-0268051a8f384762a2686b1d43ad390b">EditorBot prompt</a> - it’s approximately ten million words long! You can always refine it later if you’d like.</p>
+</blockquote>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -319,39 +325,15 @@ This fills in the blank
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>article)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>New York City's open-air drug markets, in areas such as the Bronx's Kingsbridge Road underpass, are becoming more of a problem, with police rarely intervening and overdoses at a record high. The city's special narcotics prosecutor’s office has reported that 3,200 deaths occurred in 2022 due to overdoses. The dilemma for the city is how to address the epidemic without resorting to aggressive crackdowns that have previously led to civil rights abuses and have not effectively curbed drug use. The situation is particularly concerning with the rise of fentanyl, a powerful synthetic opioid, which is becoming increasingly deadly. Over 1,500 children died from fentanyl overdoses in 2021, with over 100 of them being under the age of four. The city and state have been moving away from aggressive law enforcement of street drugs, instead viewing drug use as a public health crisis.
-</code></pre>
-</div>
-</div>
-<p>This gets us an answer, but <em>can we write a better prompt?</em></p>
-<p>Think about asking GPT to use a specific tone, or cheat a little by telling it to copy a publication. You can also set a length, reading level or target audience!</p>
-<p>I also recommend asking your tools for suggestions – you can try asking ChatGPT “how would you describe the writing style of the New York Times? Be detailed.” and use that as a jumping-off point.</p>
-<blockquote class="blockquote">
-<p>Don’t ever feel like your prompt is too long! Check the <a href="https://jamditis.notion.site/Superprompt-EditorBot-for-feedback-on-your-writing-0268051a8f384762a2686b1d43ad390b">EditorBot prompt</a> - it’s approximately ten million words long! You can always refine it later if you’d like.</p>
-</blockquote>
-<div class="cell" data-execution_count="98">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the article below:</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>article)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Open-air drug markets persist in New York City, even as the city grapples with a record high number of overdose deaths. The city's approach to drug use has shifted away from aggressive law enforcement towards treating it as a public health crisis, leading to a rise in visible drug use in areas ranging from low-income neighborhoods to tourist hubs. Critics argue this approach has led to an increase in violence and has made it harder to prosecute those higher up the drug chain. Meanwhile, the rise of fentanyl, a highly potent drug, has increased the stakes, with over 1,500 children dying from fatal overdoses in 2021. The city has responded by setting up supervised drug consumption sites, but these are often in a legal grey area and lack sufficient funding.</code></pre>
-</div>
 </div>
 </section>
 <section id="document-summaries-research" class="level2">
 <h2 class="anchored" data-anchor-id="document-summaries-research">Document summaries (research)</h2>
 <section id="text-file" class="level3">
 <h3 class="anchored" data-anchor-id="text-file">Text file</h3>
-<div class="cell" data-execution_count="100">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I'll add this later!</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You don't normally have text files, do you?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I'll add this later!</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You don't normally have text files, do you?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="pdf" class="level3">
@@ -359,53 +341,25 @@ This fills in the blank
 <p>PDFs are common sources for longer documents - reports, academic papers, etc.</p>
 <p>I like using <a href="https://pdfminersix.readthedocs.io/en/latest/">pdfminer.six</a> to extract text from PDFs, it’s super time. We’ll first pull the text out, then try to send it to GPT for a summary.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q pdfminer.six</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q pdfminer.six</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.high_level <span class="im">import</span> extract_text</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pdf_text <span class="op">=</span> extract_text(<span class="st">"data-files/ai-report.pdf"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pdf_text[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>POLIS
-
-Journalism at LSE
-
-Generating Change
-A global survey of what news 
-organisations are doing with AI 
-
-Charlie Beckett and Mira Yaseen
-
-Preface
-
-Our news media world has been turned upside down again. As always, serious technological 
-change produces both dystopian and utopian hype. Much of this has been generated on social 
-media by corporate PR and politicians. News coverage and expert commentary has also 
-veered from excited coverage of positive breakthroughs in fields such as medicine to much 
-more frightening visions of negative forces unleashed: Generative AI (genAI) is producing a 
-tidal wave of automated, undetectable disinformation; it will amplify discrimination, extreme 
-speech and inequalities.&nbsp;
-
-And its impact on journalism? Again, much of the coverage has focused on the unreliability of 
-many genAI tools and the controversy over its rapacious appetite for other people’s data to train 
-its algorithms. As the initial storm of hype turns into more practical considerati</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.high_level <span class="im">import</span> extract_text</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pdf_text <span class="op">=</span> extract_text(<span class="st">"data-files/ai-report.pdf"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pdf_text[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s use a simple summarization prompt.</p>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the paper below:</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>pdf_text)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>InvalidRequestError: This model's maximum context length is 8192 tokens. However, your messages resulted in 33095 tokens. Please reduce the length of the messages.</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">Summarize the paper below:</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>pdf_text)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>We get an error!</strong> This is because our text is longer than GPT’s <strong>token limit.</strong></p>
 <p>To make this summarization work, we have to <strong>split our document into pieces!</strong></p>
@@ -415,260 +369,115 @@ its algorithms. As the initial storm of hype turns into more practical considera
 </blockquote>
 <p>We’ll start by reading in our document, and using <code>load_and_split</code> to divide it up into separate pages. Later on we’ll show an example of a more “intelligent” splitting that understands headers and sections, but this one is a simple example for now.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q pypdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q pypdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'data-files/science-paper.pdf'</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>21</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'data-files/science-paper.pdf'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we’ll connect to GPT.</p>
-<div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we’ll create a prompt to summarize the pieces. It’s a lot of code, but I promise you’ll (almost???) always use the same one every time.</p>
-<div class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> PromptTemplate</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains.summarize <span class="im">import</span> load_summarize_chain</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>prompt_template <span class="op">=</span> <span class="st">"""Summarize the following document.</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">TEXT: </span><span class="sc">{text}</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="st">CONCISE SUMMARY:"""</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>PROMPT <span class="op">=</span> PromptTemplate(template<span class="op">=</span>prompt_template, input_variables<span class="op">=</span>[<span class="st">"text"</span>])</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>chain <span class="op">=</span> load_summarize_chain(llm,</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                             chain_type<span class="op">=</span><span class="st">"map_reduce"</span>,</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                             return_intermediate_steps<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                             map_prompt<span class="op">=</span>PROMPT,</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                             combine_prompt<span class="op">=</span>PROMPT)</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> chain({<span class="st">"input_documents"</span>: docs}, return_only_outputs<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain <span class="im">import</span> PromptTemplate</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains.summarize <span class="im">import</span> load_summarize_chain</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>prompt_template <span class="op">=</span> <span class="st">"""Summarize the following document.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">TEXT: </span><span class="sc">{text}</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">CONCISE SUMMARY:"""</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>PROMPT <span class="op">=</span> PromptTemplate(template<span class="op">=</span>prompt_template, input_variables<span class="op">=</span>[<span class="st">"text"</span>])</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>chain <span class="op">=</span> load_summarize_chain(llm,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                             chain_type<span class="op">=</span><span class="st">"map_reduce"</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                             return_intermediate_steps<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                             map_prompt<span class="op">=</span>PROMPT,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                             combine_prompt<span class="op">=</span>PROMPT)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> chain({<span class="st">"input_documents"</span>: docs}, return_only_outputs<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">'output_text'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>This document is a review of the nutrient composition and value of milk and plant-based milk alternatives. It compares the protein, fat, and calcium content of various plant-based milks to cow's milk. The review finds that plant-based milk alternatives often have lower nutritional value, particularly in terms of protein content. It also discusses other factors such as vitamin and mineral content and absorption. The document highlights the importance of understanding the implications of using plant-based milk alternatives as nutritional replacements. It mentions public health concerns related to the consumption of milk and provides references to studies on nutrition and health. Overall, the document concludes that plant-based milk alternatives are generally nutritionally inferior to cow's milk and should not be considered as complete nutritional alternatives.</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">'output_text'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="translation" class="level2">
 <h2 class="anchored" data-anchor-id="translation">Translation</h2>
 <p>While we <em>could</em> use something like DeepL or Google Translate, why not just use the LLM for <em>absolutely everything?</em></p>
-<div class="cell" data-execution_count="55">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>folktale <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data-files/folktale-short.txt"</span>).read()</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(folktale[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A KÓRÓ ÉS A KIS MADÁR.
-
-Egyszer volt, hol nem volt, volt a világon egy kis madár. Ez a kis madár
-egyszer nagyon megunta magát, rászállt egy kóróra:
-
-– Kis kóró ringass engemet!
-
-– Nem ringatom biz én senki kis madarát!
-
-A kis madár megharagudott, elrepült onnan. A mint ment mendegélt, talált
-egy kecskét:
-
-– Kecske! rágd el a kórót!
-
-Kecske nem ment kóró rágni, a kóró még se’ ringatta a kis madarat.
-Megint ment mendegélt a kis madár, talált egy farkast:
-
-– Farkas! edd meg a kecskét!
-
-Farkas nem ment kecske enni, kecske nem ment kóró rágni, kóró még se’
-ringatta a kis madarat.
-
-Megint ment mendegélt a kis madár, talált egy falut:
-
-– Falu! kergesd el a farkast!
-
-Falu nem ment farkas kergetni, farkas nem ment kecske enni, kecske nem
-ment kóró rágni, a kóró még se’ ringatta a kis madarat;
-
-Megint ment mendegélt a kis madár, talált egy tüzet:
-
-– Tűz! égesd meg a falut.
-
-Tűz nem ment falu égetni, falu nem ment farkas kergetni, farkas nem ment
-kecske enni, kecske nem ment kóró rágni, a kóró még se’ ringatta a kis
-madarat.
-
-Megint ment mendegélt a kis madár, talált egy vizet:
-
-– Viz! oltsd el a tüzet.
-
-Viz nem ment tüzet oltani, tűz nem ment falu égetni, falu nem ment
-farkas kergetni, farkas nem ment kecske enni, kecske nem ment kóró
-rágni, a kóró még se’ ringatta a kis madarat.
-
-Megint ment mendegélt a kis madár, talált egy bikát:
-
-– Bika! idd fel a vizet!
-
-Bika nem ment vizet inni, viz nem ment tüzet oltani, tűz nem ment falu
-égetni, falu nem ment farkas kergetni, farkas nem ment kecske enni,
-kecske nem ment kóró rágni, a kóró még se’ ringatta a kis madarat.
-
-Megint ment mendegélt a kis madár, talált egy furkót.
-
-– Furkó üsd agyon a bikát.
-
-Furkó nem ment bika ütni, bika nem ment vizet inni, viz nem ment tüzet
-oltani, tűz nem ment falu égetni, falu nem ment farkas kergetni, farkas
-nem ment kecske enni, kecske nem ment kóró rágni, a kóró még se’
-ringatta a kis madarat.
-
-Megint ment mendegélt a kis madár, talált egy férget.
-
-– Féreg fúrd ki a furkót.
-
-Féreg nem ment furkót f</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>folktale <span class="op">=</span> <span class="bu">open</span>(<span class="st">"data-files/folktale-short.txt"</span>).read()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(folktale[:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Like always, we’ll start by connecting to ChatGPT, build a prompt, then send it over to be analyzed.</p>
-<div class="cell" data-execution_count="57">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>ONCE UPON A TIME THERE WAS A DISEASE AND A LITTLE BIRD.
-
-Once upon a time, in a land far away, there was a little bird. This little bird got very bored and landed on a branch:
-
-- Little branch, rock me to sleep!
-
-- I don't rock any little birds!
-
-The little bird got angry and flew away. As it wandered, it found a goat:
-
-- Goat, chew on the branch!
-
-The goat didn't chew on the branch, and the branch still didn't rock the little bird. The little bird continued on its way and found a wolf:
-
-- Wolf, eat the goat!
-
-The wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a village:
-
-- Village, chase away the wolf!
-
-The village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a fire:
-
-- Fire, burn down the village.
-
-The fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found water:
-
-- Water, put out the fire.
-
-The water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a bull:
-
-- Bull, drink the water!
-
-The bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a pitchfork.
-
-- Pitchfork, kill the bull.
-
-The pitchfork didn't kill the bull, the bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a worm.
-
-- Worm, dig into the pitchfork.
-
-The worm didn't dig into the pitchfork, the pitchfork didn't kill the bull, the bull didn't drink the water, the water didn't put out the fire, the fire didn't burn down the village, the village didn't chase away the wolf, the wolf didn't eat the goat, the goat didn't chew on the branch, and the branch still didn't rock the little bird.
-
-The little bird continued on its way and found a rooster.
-
-- Rooster, pick up the worm.
-
-The rooster ran, picked up the worm, the worm ran, gnawed on the pitchfork, the pitchfork ran, hit the bull, the bull ran, drank the water, the water ran, put out the fire, the fire ran, burned the village, the village ran, chased the wolf, the wolf ran, ate the goat, the goat ran, chewed on the branch, and the branch finally rocked the little bird.
-
-If it still hadn't rocked the little bird, my story would have continued.</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>What happens if we try with <code>gpt-4</code> instead of <code>gpt-3.5-turbo</code>?</p>
-<div class="cell" data-execution_count="58">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-4"</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You'll need your own OpenAI GPT API key! This one was mine,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># but I've deactivated it so I can publish this.</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>API_KEY <span class="op">=</span> <span class="st">"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"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> ChatOpenAI(openai_api_key<span class="op">=</span>API_KEY, model_name<span class="op">=</span><span class="st">"gpt-4"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the text below into English:</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(text<span class="op">=</span>folktale)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="transcription-speech-to-text" class="level2">
 <h2 class="anchored" data-anchor-id="transcription-speech-to-text">Transcription (speech to text)</h2>
 <p><a href="https://github.com/openai/whisper">Whisper</a> is a transcription engine. You can use the code below to read from an mp3, or you can <a href="https://huggingface.co/spaces/openai/whisper">try the interactive version</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q whisper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q whisper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="61">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> whisper</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> whisper.load_model(<span class="st">"base"</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> model.transcribe(<span class="st">"data-files/sample-audio.mp3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/soma/.pyenv/versions/3.10.3/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/whisper/transcribe.py:114: UserWarning: FP16 is not supported on CPU; using FP32 instead
-  warnings.warn("FP16 is not supported on CPU; using FP32 instead")</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> whisper</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> whisper.load_model(<span class="st">"base"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> model.transcribe(<span class="st">"data-files/sample-audio.mp3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="62">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">"text"</span>][:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> Okay, I was wondering if you could tell me a little bit about the program. What exactly goes on? Okay, well basically it's an intensive program designed to last four weeks, each session is four weeks long, although we do have two sessions in 1996 that will be two weeks long. But our general four weeks session involves seven hours of contact each day of Spanish. It involves starting at nine o'clock in the morning with three hours of grammar instruction. And then it's followed immediately by an hour of group conversation with the same instructor, same class, but we have extensive gardens here at the Institute and so students will usually go out to a garden setting because it's a little more comfortable. And then after a break for lunch, students return and we have a complete flip of instruction in that instead of textbook and clinical type instruction, we have hands on and we offer workshops in Mejibak's drop leaving, regional cooking of Wahaka at Donpas-Nal pottery. And if we have larg</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result[<span class="st">"text"</span>][:<span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the example above, we use the <code>base</code> model. You can see <a href="https://github.com/openai/whisper#available-models-and-languages">the different model versions here</a>, which vary in their accuracy and knowledge of non-English languages.</p>
 </section>
@@ -687,108 +496,79 @@ If it still hadn't rocked the little bird, my story would have continued.</code>
 <p>Because large language models are remarkably well-read, they’re very good at categorizing content for you. If your categories are nuanced and specific it’s a little more trouble, but if you’re categorizing content across <em>broad categories</em> it should do a great job.</p>
 <p>Here’s a basic example of how it works:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: A Bill to Regulate the Sulfur Emissions of Coal-Fired Energy</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">Plants in the State of New York.</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: A Bill to Regulate the Sulfur Emissions of Coal-Fired Energy</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">Plants in the State of New York.</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Instead of writing the big long <code>"Categorize the following text..."</code> prompt for <em>every single bill</em>, we can also use Python’s <code>.format</code>. It allows us to write the prompt once, then fill in the blanks for the part that changes each time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is super convenient if we want to categorize many things! For example, you might use a loop…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>bills <span class="op">=</span> [</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bill <span class="kw">in</span> bills:</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>bill)</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bill, <span class="st">"is"</span>, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>bills <span class="op">=</span> [</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bill <span class="kw">in</span> bills:</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>bill)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bill, <span class="st">"is"</span>, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>…or if you have a pandas DataFrame, you can use <code>.apply</code> and build a new column for your category!</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_colwidth"</span>, <span class="dv">500</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>: [</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">title</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>A Bill to Allow Additional Refugees In Upstate New York</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>A Bill to Close Down Coal-fired Power Plants</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>A Bill to Banning Assault Rifles at Public Events</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_colwidth"</span>, <span class="dv">500</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>: [</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Allow Additional Refugees In Upstate New York"</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Close Down Coal-fired Power Plants"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A Bill to Banning Assault Rifles at Public Events"</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_prediction(row):</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> row[<span class="st">'title'</span>]</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>text)</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Send each row to make_prediction and store the category in a new column</span></span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'predicted_category'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(make_prediction, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_prediction(row):</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> row[<span class="st">'title'</span>]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> template.<span class="bu">format</span>(bill_text<span class="op">=</span>text)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.predict(prompt)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Send each row to make_prediction and store the category in a new column</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'predicted_category'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(make_prediction, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It’s like magic!</p>
 </section>
@@ -801,20 +581,20 @@ If it still hadn't rocked the little bird, my story would have continued.</code>
 <p>Sometimes your classifier might not do a great job. It might be a topic the LLM doesn’t know much about, you might be asking for nuance it doesn’t have out of the box, or a million and one other things might be going wrong. In those cases, it’s useful to try <strong>few-shot classification</strong>.</p>
 <p>In the same way that zero-shot classification takes zero examples going in, few-shot classification takes… a few examples!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about immigration</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="st">IMMIGRATION</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about gun control</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="st">GUN CONTROL</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the following text as being about ENVIRONMENT, GUN CONTROL,</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">or IMMIGRATION. Respond with only the category.</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about immigration</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="st">IMMIGRATION</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="st">Text: Something about gun control</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="st">GUN CONTROL</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="st">Text: </span><span class="sc">{bill_text}</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(template.<span class="bu">format</span>(bill_text<span class="op">=</span><span class="st">"This fills in the spot in the template"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="custom-classifiers" class="level3">
@@ -844,45 +624,22 @@ If it still hadn't rocked the little bird, my story would have continued.</code>
 </ol>
 <p>If you use <a href="https://ui.autotrain.huggingface.co/">HuggingFace AutoTrain</a>, you can easily make your own models! I made one <a href="https://huggingface.co/wendys-llc/amber-mines">to classify illegal amber mines</a> based on <a href="https://texty.org.ua/d/2018/amber_eng/">Texty’s work</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q transformers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q transformers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="64">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(<span class="st">"image-classification"</span>, model<span class="op">=</span><span class="st">"wendys-llc/amber-mines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4404f7a46af444078ca9ac0b71209edc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8e4143a5dbf149448a6cfc2da7393442","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"454ab3966b194bfc91ff8e3b820e54cc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(<span class="st">"image-classification"</span>, model<span class="op">=</span><span class="st">"wendys-llc/amber-mines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>What does the model think about this image?</p>
 <p><img src="amber-sample-1.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="65">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-1.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="65">
-<pre><code>[{'score': 0.9965369701385498, 'label': 'negative'},
- {'score': 0.003463044995442033, 'label': 'positive'}]</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-1.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>How about this one?</p>
 <p><img src="amber-sample-1.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="66">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-2.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="66">
-<pre><code>[{'score': 0.9864670634269714, 'label': 'positive'},
- {'score': 0.013532912358641624, 'label': 'negative'}]</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>classifier(<span class="st">"amber-sample-2.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="object-detection" class="level3">
 <h3 class="anchored" data-anchor-id="object-detection">Object detection</h3>
@@ -907,851 +664,116 @@ If it still hadn't rocked the little bird, my story would have continued.</code>
 <p>Transcribing all of your interviews and then doing searches across them is a beautiful thing.</p>
 <p>Give <a href="https://github.com/freedmand/semantra">Semantra</a> a try to run it locally.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q sentence<span class="op">-</span>transformers sentencepiece</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>q sentence<span class="op">-</span>transformers sentencepiece</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="70">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"This is an example sentence"</span>]</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(embeddings[<span class="dv">0</span>][:<span class="dv">50</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[ 0.0676569   0.06349581  0.0487131   0.07930496  0.03744796  0.00265277
-  0.03937485 -0.00709837  0.0593615   0.03153696  0.06009803 -0.05290522
-  0.04060676 -0.02593078  0.02984274  0.00112689  0.07351495 -0.05038185
- -0.12238666  0.02370274  0.02972649  0.04247681  0.0256338   0.00199517
- -0.05691912 -0.02715985 -0.03290359  0.06602488  0.11900704 -0.04587924
- -0.07262138 -0.03258408  0.05234135  0.04505523  0.00825302  0.03670237
- -0.01394151  0.06539196 -0.02642729  0.00020634 -0.01366437 -0.03628108
- -0.0195043  -0.02897387  0.03942709 -0.08840913  0.00262434  0.01367143
-  0.04830637 -0.03115652]</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"This is an example sentence"</span>]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(embeddings[<span class="dv">0</span>][:<span class="dv">50</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Molly ate a fish"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jen consumed a carp"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I would like to sell you a house"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Я пытаюсь купить дачу"</span>, <span class="co"># I'm trying to buy a summer home</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"J'aimerais vous louer un grand appartement"</span>, <span class="co"># I would like to rent a large apartment to you</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"This is a wonderful investment opportunity"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Это прекрасная возможность для инвестиций"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C'est une merveilleuse opportunité d'investissement"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"これは素晴らしい投資機会です"</span>, <span class="co"># investment opportunity</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"野球はあなたが思うよりも面白いことがあります"</span>, <span class="co"># baseball can be more interesting than you think</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baseball can be interesting than you'd think"</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="71">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Molly ate a fish"</span>,</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jen consumed a carp"</span>,</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I would like to sell you a house"</span>,</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Я пытаюсь купить дачу"</span>, <span class="co"># I'm trying to buy a summer home</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"J'aimerais vous louer un grand appartement"</span>, <span class="co"># I would like to rent a large apartment to you</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"This is a wonderful investment opportunity"</span>,</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Это прекрасная возможность для инвестиций"</span>, <span class="co"># investment opportunity</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C'est une merveilleuse opportunité d'investissement"</span>, <span class="co"># investment opportunity</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"これは素晴らしい投資機会です"</span>, <span class="co"># investment opportunity</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"野球はあなたが思うよりも面白いことがあります"</span>, <span class="co"># baseball can be more interesting than you think</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baseball can be interesting than you'd think"</span></span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="72">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/all-MiniLM-L6-v2'</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="73">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="73">
-<style type="text/css">
-#T_ed13a_row0_col0, #T_ed13a_row1_col1, #T_ed13a_row2_col2, #T_ed13a_row3_col3, #T_ed13a_row4_col4, #T_ed13a_row5_col5, #T_ed13a_row6_col6, #T_ed13a_row7_col7, #T_ed13a_row8_col8, #T_ed13a_row9_col9, #T_ed13a_row10_col10 {
-  background-color: #023858;
-  color: #f1f1f1;
-}
-#T_ed13a_row0_col1, #T_ed13a_row1_col0 {
-  background-color: #4e9ac6;
-  color: #f1f1f1;
-}
-#T_ed13a_row0_col2, #T_ed13a_row0_col8, #T_ed13a_row2_col0, #T_ed13a_row2_col9, #T_ed13a_row8_col0, #T_ed13a_row9_col2 {
-  background-color: #ebe6f2;
-  color: #000000;
-}
-#T_ed13a_row0_col3, #T_ed13a_row3_col0 {
-  background-color: #dddbec;
-  color: #000000;
-}
-#T_ed13a_row0_col4, #T_ed13a_row0_col10, #T_ed13a_row4_col0, #T_ed13a_row5_col8, #T_ed13a_row8_col5, #T_ed13a_row10_col0 {
-  background-color: #ece7f2;
-  color: #000000;
-}
-#T_ed13a_row0_col5, #T_ed13a_row5_col0 {
-  background-color: #f8f1f8;
-  color: #000000;
-}
-#T_ed13a_row0_col6, #T_ed13a_row1_col3, #T_ed13a_row3_col1, #T_ed13a_row6_col0 {
-  background-color: #e9e5f1;
-  color: #000000;
-}
-#T_ed13a_row0_col7, #T_ed13a_row7_col0 {
-  background-color: #f7f0f7;
-  color: #000000;
-}
-#T_ed13a_row0_col9, #T_ed13a_row1_col10, #T_ed13a_row2_col6, #T_ed13a_row6_col2, #T_ed13a_row9_col0, #T_ed13a_row10_col1 {
-  background-color: #ede7f2;
-  color: #000000;
-}
-#T_ed13a_row1_col2, #T_ed13a_row2_col1 {
-  background-color: #e7e3f0;
-  color: #000000;
-}
-#T_ed13a_row1_col4, #T_ed13a_row4_col1 {
-  background-color: #f1ebf5;
-  color: #000000;
-}
-#T_ed13a_row1_col5, #T_ed13a_row2_col7, #T_ed13a_row5_col1, #T_ed13a_row5_col9, #T_ed13a_row7_col2, #T_ed13a_row9_col5 {
-  background-color: #f0eaf4;
-  color: #000000;
-}
-#T_ed13a_row1_col6, #T_ed13a_row6_col1 {
-  background-color: #faf2f8;
-  color: #000000;
-}
-#T_ed13a_row1_col7, #T_ed13a_row4_col10, #T_ed13a_row7_col1, #T_ed13a_row10_col4 {
-  background-color: #f1ebf4;
-  color: #000000;
-}
-#T_ed13a_row1_col8, #T_ed13a_row3_col7, #T_ed13a_row7_col3, #T_ed13a_row8_col1 {
-  background-color: #dedcec;
-  color: #000000;
-}
-#T_ed13a_row1_col9, #T_ed13a_row9_col1 {
-  background-color: #d6d6e9;
-  color: #000000;
-}
-#T_ed13a_row2_col3, #T_ed13a_row3_col2 {
-  background-color: #d2d2e7;
-  color: #000000;
-}
-#T_ed13a_row2_col4, #T_ed13a_row4_col2 {
-  background-color: #e0dded;
-  color: #000000;
-}
-#T_ed13a_row2_col5, #T_ed13a_row5_col2 {
-  background-color: #88b1d4;
-  color: #000000;
-}
-#T_ed13a_row2_col8, #T_ed13a_row8_col2 {
-  background-color: #eee8f3;
-  color: #000000;
-}
-#T_ed13a_row2_col10, #T_ed13a_row7_col10, #T_ed13a_row10_col2, #T_ed13a_row10_col7 {
-  background-color: #eee9f3;
-  color: #000000;
-}
-#T_ed13a_row3_col4, #T_ed13a_row4_col3 {
-  background-color: #d1d2e6;
-  color: #000000;
-}
-#T_ed13a_row3_col5, #T_ed13a_row5_col3 {
-  background-color: #e3e0ee;
-  color: #000000;
-}
-#T_ed13a_row3_col6, #T_ed13a_row6_col3 {
-  background-color: #69a5cc;
-  color: #f1f1f1;
-}
-#T_ed13a_row3_col8, #T_ed13a_row8_col3 {
-  background-color: #a1bbda;
-  color: #000000;
-}
-#T_ed13a_row3_col9, #T_ed13a_row9_col3 {
-  background-color: #9cb9d9;
-  color: #000000;
-}
-#T_ed13a_row3_col10, #T_ed13a_row10_col3 {
-  background-color: #fff7fb;
-  color: #000000;
-}
-#T_ed13a_row4_col5, #T_ed13a_row5_col4 {
-  background-color: #eae6f1;
-  color: #000000;
-}
-#T_ed13a_row4_col6, #T_ed13a_row6_col4 {
-  background-color: #8fb4d6;
-  color: #000000;
-}
-#T_ed13a_row4_col7, #T_ed13a_row7_col4 {
-  background-color: #3d93c2;
-  color: #f1f1f1;
-}
-#T_ed13a_row4_col8, #T_ed13a_row8_col4 {
-  background-color: #cdd0e5;
-  color: #000000;
-}
-#T_ed13a_row4_col9, #T_ed13a_row9_col4 {
-  background-color: #dad9ea;
-  color: #000000;
-}
-#T_ed13a_row5_col6, #T_ed13a_row6_col5 {
-  background-color: #f3edf5;
-  color: #000000;
-}
-#T_ed13a_row5_col7, #T_ed13a_row7_col5 {
-  background-color: #c1cae2;
-  color: #000000;
-}
-#T_ed13a_row5_col10, #T_ed13a_row10_col5 {
-  background-color: #d9d8ea;
-  color: #000000;
-}
-#T_ed13a_row6_col7, #T_ed13a_row7_col6 {
-  background-color: #acc0dd;
-  color: #000000;
-}
-#T_ed13a_row6_col8, #T_ed13a_row8_col6 {
-  background-color: #b0c2de;
-  color: #000000;
-}
-#T_ed13a_row6_col9, #T_ed13a_row9_col6 {
-  background-color: #abbfdc;
-  color: #000000;
-}
-#T_ed13a_row6_col10, #T_ed13a_row10_col6 {
-  background-color: #f4eef6;
-  color: #000000;
-}
-#T_ed13a_row7_col8, #T_ed13a_row8_col7 {
-  background-color: #a8bedc;
-  color: #000000;
-}
-#T_ed13a_row7_col9, #T_ed13a_row9_col7 {
-  background-color: #c8cde4;
-  color: #000000;
-}
-#T_ed13a_row8_col9, #T_ed13a_row9_col8 {
-  background-color: #3790c0;
-  color: #f1f1f1;
-}
-#T_ed13a_row8_col10, #T_ed13a_row9_col10, #T_ed13a_row10_col8, #T_ed13a_row10_col9 {
-  background-color: #fdf5fa;
-  color: #000000;
-}
-</style>
-
-<table id="T_ed13a" data-quarto-postprocess="true" class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
-<th id="T_ed13a_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Molly ate a fish</th>
-<th id="T_ed13a_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Jen consumed a carp</th>
-<th id="T_ed13a_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">I would like to sell you a house</th>
-<th id="T_ed13a_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</th>
-<th id="T_ed13a_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</th>
-<th id="T_ed13a_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</th>
-<th id="T_ed13a_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</th>
-<th id="T_ed13a_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</th>
-<th id="T_ed13a_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</th>
-<th id="T_ed13a_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</th>
-<th id="T_ed13a_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td id="T_ed13a_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">Molly ate a fish</td>
-<td id="T_ed13a_row0_col0" class="data row0 col0">1.000000</td>
-<td id="T_ed13a_row0_col1" class="data row0 col1">0.526053</td>
-<td id="T_ed13a_row0_col2" class="data row0 col2">0.025476</td>
-<td id="T_ed13a_row0_col3" class="data row0 col3">0.098335</td>
-<td id="T_ed13a_row0_col4" class="data row0 col4">0.020435</td>
-<td id="T_ed13a_row0_col5" class="data row0 col5">-0.065293</td>
-<td id="T_ed13a_row0_col6" class="data row0 col6">0.035801</td>
-<td id="T_ed13a_row0_col7" class="data row0 col7">-0.062506</td>
-<td id="T_ed13a_row0_col8" class="data row0 col8">0.027358</td>
-<td id="T_ed13a_row0_col9" class="data row0 col9">0.017622</td>
-<td id="T_ed13a_row0_col10" class="data row0 col10">0.023445</td>
-</tr>
-<tr class="even">
-<td id="T_ed13a_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">Jen consumed a carp</td>
-<td id="T_ed13a_row1_col0" class="data row1 col0">0.526053</td>
-<td id="T_ed13a_row1_col1" class="data row1 col1">1.000000</td>
-<td id="T_ed13a_row1_col2" class="data row1 col2">0.044178</td>
-<td id="T_ed13a_row1_col3" class="data row1 col3">0.035044</td>
-<td id="T_ed13a_row1_col4" class="data row1 col4">-0.018194</td>
-<td id="T_ed13a_row1_col5" class="data row1 col5">-0.004438</td>
-<td id="T_ed13a_row1_col6" class="data row1 col6">-0.078566</td>
-<td id="T_ed13a_row1_col7" class="data row1 col7">-0.011418</td>
-<td id="T_ed13a_row1_col8" class="data row1 col8">0.090357</td>
-<td id="T_ed13a_row1_col9" class="data row1 col9">0.131507</td>
-<td id="T_ed13a_row1_col10" class="data row1 col10">0.016100</td>
-</tr>
-<tr class="odd">
-<td id="T_ed13a_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">I would like to sell you a house</td>
-<td id="T_ed13a_row2_col0" class="data row2 col0">0.025476</td>
-<td id="T_ed13a_row2_col1" class="data row2 col1">0.044178</td>
-<td id="T_ed13a_row2_col2" class="data row2 col2">1.000000</td>
-<td id="T_ed13a_row2_col3" class="data row2 col3">0.154773</td>
-<td id="T_ed13a_row2_col4" class="data row2 col4">0.083555</td>
-<td id="T_ed13a_row2_col5" class="data row2 col5">0.386736</td>
-<td id="T_ed13a_row2_col6" class="data row2 col6">0.017175</td>
-<td id="T_ed13a_row2_col7" class="data row2 col7">-0.006744</td>
-<td id="T_ed13a_row2_col8" class="data row2 col8">0.010857</td>
-<td id="T_ed13a_row2_col9" class="data row2 col9">0.025510</td>
-<td id="T_ed13a_row2_col10" class="data row2 col10">0.006353</td>
-</tr>
-<tr class="even">
-<td id="T_ed13a_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</td>
-<td id="T_ed13a_row3_col0" class="data row3 col0">0.098335</td>
-<td id="T_ed13a_row3_col1" class="data row3 col1">0.035044</td>
-<td id="T_ed13a_row3_col2" class="data row3 col2">0.154773</td>
-<td id="T_ed13a_row3_col3" class="data row3 col3">1.000000</td>
-<td id="T_ed13a_row3_col4" class="data row3 col4">0.159519</td>
-<td id="T_ed13a_row3_col5" class="data row3 col5">0.064379</td>
-<td id="T_ed13a_row3_col6" class="data row3 col6">0.462397</td>
-<td id="T_ed13a_row3_col7" class="data row3 col7">0.092110</td>
-<td id="T_ed13a_row3_col8" class="data row3 col8">0.314708</td>
-<td id="T_ed13a_row3_col9" class="data row3 col9">0.327675</td>
-<td id="T_ed13a_row3_col10" class="data row3 col10">-0.119607</td>
-</tr>
-<tr class="odd">
-<td id="T_ed13a_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</td>
-<td id="T_ed13a_row4_col0" class="data row4 col0">0.020435</td>
-<td id="T_ed13a_row4_col1" class="data row4 col1">-0.018194</td>
-<td id="T_ed13a_row4_col2" class="data row4 col2">0.083555</td>
-<td id="T_ed13a_row4_col3" class="data row4 col3">0.159519</td>
-<td id="T_ed13a_row4_col4" class="data row4 col4">1.000000</td>
-<td id="T_ed13a_row4_col5" class="data row4 col5">0.032253</td>
-<td id="T_ed13a_row4_col6" class="data row4 col6">0.365505</td>
-<td id="T_ed13a_row4_col7" class="data row4 col7">0.566635</td>
-<td id="T_ed13a_row4_col8" class="data row4 col8">0.172406</td>
-<td id="T_ed13a_row4_col9" class="data row4 col9">0.110118</td>
-<td id="T_ed13a_row4_col10" class="data row4 col10">-0.013743</td>
-</tr>
-<tr class="even">
-<td id="T_ed13a_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</td>
-<td id="T_ed13a_row5_col0" class="data row5 col0">-0.065293</td>
-<td id="T_ed13a_row5_col1" class="data row5 col1">-0.004438</td>
-<td id="T_ed13a_row5_col2" class="data row5 col2">0.386736</td>
-<td id="T_ed13a_row5_col3" class="data row5 col3">0.064379</td>
-<td id="T_ed13a_row5_col4" class="data row5 col4">0.032253</td>
-<td id="T_ed13a_row5_col5" class="data row5 col5">1.000000</td>
-<td id="T_ed13a_row5_col6" class="data row5 col6">-0.030322</td>
-<td id="T_ed13a_row5_col7" class="data row5 col7">0.212230</td>
-<td id="T_ed13a_row5_col8" class="data row5 col8">0.023889</td>
-<td id="T_ed13a_row5_col9" class="data row5 col9">-0.002844</td>
-<td id="T_ed13a_row5_col10" class="data row5 col10">0.112804</td>
-</tr>
-<tr class="odd">
-<td id="T_ed13a_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</td>
-<td id="T_ed13a_row6_col0" class="data row6 col0">0.035801</td>
-<td id="T_ed13a_row6_col1" class="data row6 col1">-0.078566</td>
-<td id="T_ed13a_row6_col2" class="data row6 col2">0.017175</td>
-<td id="T_ed13a_row6_col3" class="data row6 col3">0.462397</td>
-<td id="T_ed13a_row6_col4" class="data row6 col4">0.365505</td>
-<td id="T_ed13a_row6_col5" class="data row6 col5">-0.030322</td>
-<td id="T_ed13a_row6_col6" class="data row6 col6">1.000000</td>
-<td id="T_ed13a_row6_col7" class="data row6 col7">0.282414</td>
-<td id="T_ed13a_row6_col8" class="data row6 col8">0.267571</td>
-<td id="T_ed13a_row6_col9" class="data row6 col9">0.285873</td>
-<td id="T_ed13a_row6_col10" class="data row6 col10">-0.040309</td>
-</tr>
-<tr class="even">
-<td id="T_ed13a_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</td>
-<td id="T_ed13a_row7_col0" class="data row7 col0">-0.062506</td>
-<td id="T_ed13a_row7_col1" class="data row7 col1">-0.011418</td>
-<td id="T_ed13a_row7_col2" class="data row7 col2">-0.006744</td>
-<td id="T_ed13a_row7_col3" class="data row7 col3">0.092110</td>
-<td id="T_ed13a_row7_col4" class="data row7 col4">0.566635</td>
-<td id="T_ed13a_row7_col5" class="data row7 col5">0.212230</td>
-<td id="T_ed13a_row7_col6" class="data row7 col6">0.282414</td>
-<td id="T_ed13a_row7_col7" class="data row7 col7">1.000000</td>
-<td id="T_ed13a_row7_col8" class="data row7 col8">0.292651</td>
-<td id="T_ed13a_row7_col9" class="data row7 col9">0.187989</td>
-<td id="T_ed13a_row7_col10" class="data row7 col10">0.006793</td>
-</tr>
-<tr class="odd">
-<td id="T_ed13a_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</td>
-<td id="T_ed13a_row8_col0" class="data row8 col0">0.027358</td>
-<td id="T_ed13a_row8_col1" class="data row8 col1">0.090357</td>
-<td id="T_ed13a_row8_col2" class="data row8 col2">0.010857</td>
-<td id="T_ed13a_row8_col3" class="data row8 col3">0.314708</td>
-<td id="T_ed13a_row8_col4" class="data row8 col4">0.172406</td>
-<td id="T_ed13a_row8_col5" class="data row8 col5">0.023889</td>
-<td id="T_ed13a_row8_col6" class="data row8 col6">0.267571</td>
-<td id="T_ed13a_row8_col7" class="data row8 col7">0.292651</td>
-<td id="T_ed13a_row8_col8" class="data row8 col8">1.000000</td>
-<td id="T_ed13a_row8_col9" class="data row8 col9">0.577265</td>
-<td id="T_ed13a_row8_col10" class="data row8 col10">-0.100630</td>
-</tr>
-<tr class="even">
-<td id="T_ed13a_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</td>
-<td id="T_ed13a_row9_col0" class="data row9 col0">0.017622</td>
-<td id="T_ed13a_row9_col1" class="data row9 col1">0.131507</td>
-<td id="T_ed13a_row9_col2" class="data row9 col2">0.025510</td>
-<td id="T_ed13a_row9_col3" class="data row9 col3">0.327675</td>
-<td id="T_ed13a_row9_col4" class="data row9 col4">0.110118</td>
-<td id="T_ed13a_row9_col5" class="data row9 col5">-0.002844</td>
-<td id="T_ed13a_row9_col6" class="data row9 col6">0.285873</td>
-<td id="T_ed13a_row9_col7" class="data row9 col7">0.187989</td>
-<td id="T_ed13a_row9_col8" class="data row9 col8">0.577265</td>
-<td id="T_ed13a_row9_col9" class="data row9 col9">1.000000</td>
-<td id="T_ed13a_row9_col10" class="data row9 col10">-0.098722</td>
-</tr>
-<tr class="odd">
-<td id="T_ed13a_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</td>
-<td id="T_ed13a_row10_col0" class="data row10 col0">0.023445</td>
-<td id="T_ed13a_row10_col1" class="data row10 col1">0.016100</td>
-<td id="T_ed13a_row10_col2" class="data row10 col2">0.006353</td>
-<td id="T_ed13a_row10_col3" class="data row10 col3">-0.119607</td>
-<td id="T_ed13a_row10_col4" class="data row10 col4">-0.013743</td>
-<td id="T_ed13a_row10_col5" class="data row10 col5">0.112804</td>
-<td id="T_ed13a_row10_col6" class="data row10 col6">-0.040309</td>
-<td id="T_ed13a_row10_col7" class="data row10 col7">0.006793</td>
-<td id="T_ed13a_row10_col8" class="data row10 col8">-0.100630</td>
-<td id="T_ed13a_row10_col9" class="data row10 col9">-0.098722</td>
-<td id="T_ed13a_row10_col10" class="data row10 col10">1.000000</td>
-</tr>
-</tbody>
-</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/distiluse-base-multilingual-cased-v2'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="74">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'sentence-transformers/distiluse-base-multilingual-cased-v2'</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> model.encode(sentences)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="75">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="75">
-<style type="text/css">
-#T_d90cb_row0_col0, #T_d90cb_row1_col1, #T_d90cb_row2_col2, #T_d90cb_row3_col3, #T_d90cb_row4_col4, #T_d90cb_row5_col5, #T_d90cb_row6_col6, #T_d90cb_row7_col7, #T_d90cb_row8_col8, #T_d90cb_row9_col9, #T_d90cb_row10_col10 {
-  background-color: #023858;
-  color: #f1f1f1;
-}
-#T_d90cb_row0_col1, #T_d90cb_row1_col0 {
-  background-color: #93b5d6;
-  color: #000000;
-}
-#T_d90cb_row0_col2, #T_d90cb_row1_col2, #T_d90cb_row2_col0, #T_d90cb_row2_col1 {
-  background-color: #e6e2ef;
-  color: #000000;
-}
-#T_d90cb_row0_col3, #T_d90cb_row3_col0, #T_d90cb_row7_col10, #T_d90cb_row10_col7 {
-  background-color: #d4d4e8;
-  color: #000000;
-}
-#T_d90cb_row0_col4, #T_d90cb_row1_col5, #T_d90cb_row1_col7, #T_d90cb_row4_col0, #T_d90cb_row5_col1, #T_d90cb_row7_col1 {
-  background-color: #f3edf5;
-  color: #000000;
-}
-#T_d90cb_row0_col5, #T_d90cb_row5_col0 {
-  background-color: #faf2f8;
-  color: #000000;
-}
-#T_d90cb_row0_col6, #T_d90cb_row0_col7, #T_d90cb_row6_col0, #T_d90cb_row7_col0 {
-  background-color: #faf3f9;
-  color: #000000;
-}
-#T_d90cb_row0_col8, #T_d90cb_row8_col0 {
-  background-color: #fff7fb;
-  color: #000000;
-}
-#T_d90cb_row0_col9, #T_d90cb_row1_col6, #T_d90cb_row6_col1, #T_d90cb_row9_col0 {
-  background-color: #f4edf6;
-  color: #000000;
-}
-#T_d90cb_row0_col10, #T_d90cb_row1_col4, #T_d90cb_row4_col1, #T_d90cb_row10_col0 {
-  background-color: #f0eaf4;
-  color: #000000;
-}
-#T_d90cb_row1_col3, #T_d90cb_row3_col1 {
-  background-color: #c9cee4;
-  color: #000000;
-}
-#T_d90cb_row1_col8, #T_d90cb_row8_col1 {
-  background-color: #fcf4fa;
-  color: #000000;
-}
-#T_d90cb_row1_col9, #T_d90cb_row2_col8, #T_d90cb_row8_col2, #T_d90cb_row9_col1 {
-  background-color: #e9e5f1;
-  color: #000000;
-}
-#T_d90cb_row1_col10, #T_d90cb_row2_col7, #T_d90cb_row7_col2, #T_d90cb_row10_col1 {
-  background-color: #e4e1ef;
-  color: #000000;
-}
-#T_d90cb_row2_col3, #T_d90cb_row3_col2 {
-  background-color: #7dacd1;
-  color: #f1f1f1;
-}
-#T_d90cb_row2_col4, #T_d90cb_row4_col2 {
-  background-color: #2182b9;
-  color: #f1f1f1;
-}
-#T_d90cb_row2_col5, #T_d90cb_row5_col2 {
-  background-color: #e1dfed;
-  color: #000000;
-}
-#T_d90cb_row2_col6, #T_d90cb_row3_col8, #T_d90cb_row6_col2, #T_d90cb_row8_col3, #T_d90cb_row8_col10, #T_d90cb_row10_col8 {
-  background-color: #dad9ea;
-  color: #000000;
-}
-#T_d90cb_row2_col9, #T_d90cb_row3_col7, #T_d90cb_row7_col3, #T_d90cb_row9_col2 {
-  background-color: #d5d5e8;
-  color: #000000;
-}
-#T_d90cb_row2_col10, #T_d90cb_row6_col10, #T_d90cb_row10_col2, #T_d90cb_row10_col6 {
-  background-color: #d6d6e9;
-  color: #000000;
-}
-#T_d90cb_row3_col4, #T_d90cb_row4_col3 {
-  background-color: #96b6d7;
-  color: #000000;
-}
-#T_d90cb_row3_col5, #T_d90cb_row5_col3 {
-  background-color: #d9d8ea;
-  color: #000000;
-}
-#T_d90cb_row3_col6, #T_d90cb_row6_col3 {
-  background-color: #cacee5;
-  color: #000000;
-}
-#T_d90cb_row3_col9, #T_d90cb_row9_col3 {
-  background-color: #e7e3f0;
-  color: #000000;
-}
-#T_d90cb_row3_col10, #T_d90cb_row10_col3 {
-  background-color: #e8e4f0;
-  color: #000000;
-}
-#T_d90cb_row4_col5, #T_d90cb_row4_col7, #T_d90cb_row4_col9, #T_d90cb_row5_col4, #T_d90cb_row7_col4, #T_d90cb_row9_col4 {
-  background-color: #c5cce3;
-  color: #000000;
-}
-#T_d90cb_row4_col6, #T_d90cb_row6_col4 {
-  background-color: #bbc7e0;
-  color: #000000;
-}
-#T_d90cb_row4_col8, #T_d90cb_row8_col4 {
-  background-color: #c8cde4;
-  color: #000000;
-}
-#T_d90cb_row4_col10, #T_d90cb_row10_col4 {
-  background-color: #d3d4e7;
-  color: #000000;
-}
-#T_d90cb_row5_col6, #T_d90cb_row6_col5 {
-  background-color: #034369;
-  color: #f1f1f1;
-}
-#T_d90cb_row5_col7, #T_d90cb_row7_col5 {
-  background-color: #034165;
-  color: #f1f1f1;
-}
-#T_d90cb_row5_col8, #T_d90cb_row6_col8, #T_d90cb_row8_col5, #T_d90cb_row8_col6 {
-  background-color: #03456c;
-  color: #f1f1f1;
-}
-#T_d90cb_row5_col9, #T_d90cb_row9_col5 {
-  background-color: #e5e1ef;
-  color: #000000;
-}
-#T_d90cb_row5_col10, #T_d90cb_row10_col5 {
-  background-color: #d7d6e9;
-  color: #000000;
-}
-#T_d90cb_row6_col7, #T_d90cb_row7_col6 {
-  background-color: #023f64;
-  color: #f1f1f1;
-}
-#T_d90cb_row6_col9, #T_d90cb_row7_col9, #T_d90cb_row9_col6, #T_d90cb_row9_col7 {
-  background-color: #e0deed;
-  color: #000000;
-}
-#T_d90cb_row7_col8, #T_d90cb_row8_col7 {
-  background-color: #034267;
-  color: #f1f1f1;
-}
-#T_d90cb_row8_col9, #T_d90cb_row9_col8 {
-  background-color: #e0dded;
-  color: #000000;
-}
-#T_d90cb_row9_col10, #T_d90cb_row10_col9 {
-  background-color: #045d92;
-  color: #f1f1f1;
-}
-</style>
-
-<table id="T_d90cb" data-quarto-postprocess="true" class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
-<th id="T_d90cb_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Molly ate a fish</th>
-<th id="T_d90cb_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Jen consumed a carp</th>
-<th id="T_d90cb_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">I would like to sell you a house</th>
-<th id="T_d90cb_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</th>
-<th id="T_d90cb_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</th>
-<th id="T_d90cb_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</th>
-<th id="T_d90cb_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</th>
-<th id="T_d90cb_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</th>
-<th id="T_d90cb_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</th>
-<th id="T_d90cb_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</th>
-<th id="T_d90cb_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td id="T_d90cb_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">Molly ate a fish</td>
-<td id="T_d90cb_row0_col0" class="data row0 col0">1.000000</td>
-<td id="T_d90cb_row0_col1" class="data row0 col1">0.358347</td>
-<td id="T_d90cb_row0_col2" class="data row0 col2">0.058340</td>
-<td id="T_d90cb_row0_col3" class="data row0 col3">0.145439</td>
-<td id="T_d90cb_row0_col4" class="data row0 col4">-0.024103</td>
-<td id="T_d90cb_row0_col5" class="data row0 col5">-0.070145</td>
-<td id="T_d90cb_row0_col6" class="data row0 col6">-0.075333</td>
-<td id="T_d90cb_row0_col7" class="data row0 col7">-0.073496</td>
-<td id="T_d90cb_row0_col8" class="data row0 col8">-0.111467</td>
-<td id="T_d90cb_row0_col9" class="data row0 col9">-0.025614</td>
-<td id="T_d90cb_row0_col10" class="data row0 col10">0.001549</td>
-</tr>
-<tr class="even">
-<td id="T_d90cb_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">Jen consumed a carp</td>
-<td id="T_d90cb_row1_col0" class="data row1 col0">0.358347</td>
-<td id="T_d90cb_row1_col1" class="data row1 col1">1.000000</td>
-<td id="T_d90cb_row1_col2" class="data row1 col2">0.059195</td>
-<td id="T_d90cb_row1_col3" class="data row1 col3">0.190241</td>
-<td id="T_d90cb_row1_col4" class="data row1 col4">-0.001941</td>
-<td id="T_d90cb_row1_col5" class="data row1 col5">-0.024359</td>
-<td id="T_d90cb_row1_col6" class="data row1 col6">-0.024816</td>
-<td id="T_d90cb_row1_col7" class="data row1 col7">-0.023295</td>
-<td id="T_d90cb_row1_col8" class="data row1 col8">-0.087019</td>
-<td id="T_d90cb_row1_col9" class="data row1 col9">0.040799</td>
-<td id="T_d90cb_row1_col10" class="data row1 col10">0.067243</td>
-</tr>
-<tr class="odd">
-<td id="T_d90cb_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">I would like to sell you a house</td>
-<td id="T_d90cb_row2_col0" class="data row2 col0">0.058340</td>
-<td id="T_d90cb_row2_col1" class="data row2 col1">0.059195</td>
-<td id="T_d90cb_row2_col2" class="data row2 col2">1.000000</td>
-<td id="T_d90cb_row2_col3" class="data row2 col3">0.418692</td>
-<td id="T_d90cb_row2_col4" class="data row2 col4">0.642746</td>
-<td id="T_d90cb_row2_col5" class="data row2 col5">0.081795</td>
-<td id="T_d90cb_row2_col6" class="data row2 col6">0.118611</td>
-<td id="T_d90cb_row2_col7" class="data row2 col7">0.067805</td>
-<td id="T_d90cb_row2_col8" class="data row2 col8">0.042560</td>
-<td id="T_d90cb_row2_col9" class="data row2 col9">0.144491</td>
-<td id="T_d90cb_row2_col10" class="data row2 col10">0.139300</td>
-</tr>
-<tr class="even">
-<td id="T_d90cb_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Я пытаюсь купить дачу</td>
-<td id="T_d90cb_row3_col0" class="data row3 col0">0.145439</td>
-<td id="T_d90cb_row3_col1" class="data row3 col1">0.190241</td>
-<td id="T_d90cb_row3_col2" class="data row3 col2">0.418692</td>
-<td id="T_d90cb_row3_col3" class="data row3 col3">1.000000</td>
-<td id="T_d90cb_row3_col4" class="data row3 col4">0.351605</td>
-<td id="T_d90cb_row3_col5" class="data row3 col5">0.120679</td>
-<td id="T_d90cb_row3_col6" class="data row3 col6">0.184644</td>
-<td id="T_d90cb_row3_col7" class="data row3 col7">0.144633</td>
-<td id="T_d90cb_row3_col8" class="data row3 col8">0.115598</td>
-<td id="T_d90cb_row3_col9" class="data row3 col9">0.050505</td>
-<td id="T_d90cb_row3_col10" class="data row3 col10">0.046084</td>
-</tr>
-<tr class="odd">
-<td id="T_d90cb_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">J'aimerais vous louer un grand appartement</td>
-<td id="T_d90cb_row4_col0" class="data row4 col0">-0.024103</td>
-<td id="T_d90cb_row4_col1" class="data row4 col1">-0.001941</td>
-<td id="T_d90cb_row4_col2" class="data row4 col2">0.642746</td>
-<td id="T_d90cb_row4_col3" class="data row4 col3">0.351605</td>
-<td id="T_d90cb_row4_col4" class="data row4 col4">1.000000</td>
-<td id="T_d90cb_row4_col5" class="data row4 col5">0.203307</td>
-<td id="T_d90cb_row4_col6" class="data row4 col6">0.238716</td>
-<td id="T_d90cb_row4_col7" class="data row4 col7">0.204762</td>
-<td id="T_d90cb_row4_col8" class="data row4 col8">0.195163</td>
-<td id="T_d90cb_row4_col9" class="data row4 col9">0.201317</td>
-<td id="T_d90cb_row4_col10" class="data row4 col10">0.151998</td>
-</tr>
-<tr class="even">
-<td id="T_d90cb_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">This is a wonderful investment opportunity</td>
-<td id="T_d90cb_row5_col0" class="data row5 col0">-0.070145</td>
-<td id="T_d90cb_row5_col1" class="data row5 col1">-0.024359</td>
-<td id="T_d90cb_row5_col2" class="data row5 col2">0.081795</td>
-<td id="T_d90cb_row5_col3" class="data row5 col3">0.120679</td>
-<td id="T_d90cb_row5_col4" class="data row5 col4">0.203307</td>
-<td id="T_d90cb_row5_col5" class="data row5 col5">1.000000</td>
-<td id="T_d90cb_row5_col6" class="data row5 col6">0.953561</td>
-<td id="T_d90cb_row5_col7" class="data row5 col7">0.964282</td>
-<td id="T_d90cb_row5_col8" class="data row5 col8">0.945246</td>
-<td id="T_d90cb_row5_col9" class="data row5 col9">0.062618</td>
-<td id="T_d90cb_row5_col10" class="data row5 col10">0.133220</td>
-</tr>
-<tr class="odd">
-<td id="T_d90cb_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">Это прекрасная возможность для инвестиций</td>
-<td id="T_d90cb_row6_col0" class="data row6 col0">-0.075333</td>
-<td id="T_d90cb_row6_col1" class="data row6 col1">-0.024816</td>
-<td id="T_d90cb_row6_col2" class="data row6 col2">0.118611</td>
-<td id="T_d90cb_row6_col3" class="data row6 col3">0.184644</td>
-<td id="T_d90cb_row6_col4" class="data row6 col4">0.238716</td>
-<td id="T_d90cb_row6_col5" class="data row6 col5">0.953561</td>
-<td id="T_d90cb_row6_col6" class="data row6 col6">1.000000</td>
-<td id="T_d90cb_row6_col7" class="data row6 col7">0.968368</td>
-<td id="T_d90cb_row6_col8" class="data row6 col8">0.944719</td>
-<td id="T_d90cb_row6_col9" class="data row6 col9">0.084221</td>
-<td id="T_d90cb_row6_col10" class="data row6 col10">0.136699</td>
-</tr>
-<tr class="even">
-<td id="T_d90cb_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">C'est une merveilleuse opportunité d'investissement</td>
-<td id="T_d90cb_row7_col0" class="data row7 col0">-0.073496</td>
-<td id="T_d90cb_row7_col1" class="data row7 col1">-0.023295</td>
-<td id="T_d90cb_row7_col2" class="data row7 col2">0.067805</td>
-<td id="T_d90cb_row7_col3" class="data row7 col3">0.144633</td>
-<td id="T_d90cb_row7_col4" class="data row7 col4">0.204762</td>
-<td id="T_d90cb_row7_col5" class="data row7 col5">0.964282</td>
-<td id="T_d90cb_row7_col6" class="data row7 col6">0.968368</td>
-<td id="T_d90cb_row7_col7" class="data row7 col7">1.000000</td>
-<td id="T_d90cb_row7_col8" class="data row7 col8">0.959357</td>
-<td id="T_d90cb_row7_col9" class="data row7 col9">0.086458</td>
-<td id="T_d90cb_row7_col10" class="data row7 col10">0.146568</td>
-</tr>
-<tr class="odd">
-<td id="T_d90cb_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">これは素晴らしい投資機会です</td>
-<td id="T_d90cb_row8_col0" class="data row8 col0">-0.111467</td>
-<td id="T_d90cb_row8_col1" class="data row8 col1">-0.087019</td>
-<td id="T_d90cb_row8_col2" class="data row8 col2">0.042560</td>
-<td id="T_d90cb_row8_col3" class="data row8 col3">0.115598</td>
-<td id="T_d90cb_row8_col4" class="data row8 col4">0.195163</td>
-<td id="T_d90cb_row8_col5" class="data row8 col5">0.945246</td>
-<td id="T_d90cb_row8_col6" class="data row8 col6">0.944719</td>
-<td id="T_d90cb_row8_col7" class="data row8 col7">0.959357</td>
-<td id="T_d90cb_row8_col8" class="data row8 col8">1.000000</td>
-<td id="T_d90cb_row8_col9" class="data row8 col9">0.091451</td>
-<td id="T_d90cb_row8_col10" class="data row8 col10">0.115392</td>
-</tr>
-<tr class="even">
-<td id="T_d90cb_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">野球はあなたが思うよりも面白いことがあります</td>
-<td id="T_d90cb_row9_col0" class="data row9 col0">-0.025614</td>
-<td id="T_d90cb_row9_col1" class="data row9 col1">0.040799</td>
-<td id="T_d90cb_row9_col2" class="data row9 col2">0.144491</td>
-<td id="T_d90cb_row9_col3" class="data row9 col3">0.050505</td>
-<td id="T_d90cb_row9_col4" class="data row9 col4">0.201317</td>
-<td id="T_d90cb_row9_col5" class="data row9 col5">0.062618</td>
-<td id="T_d90cb_row9_col6" class="data row9 col6">0.084221</td>
-<td id="T_d90cb_row9_col7" class="data row9 col7">0.086458</td>
-<td id="T_d90cb_row9_col8" class="data row9 col8">0.091451</td>
-<td id="T_d90cb_row9_col9" class="data row9 col9">1.000000</td>
-<td id="T_d90cb_row9_col10" class="data row9 col10">0.839617</td>
-</tr>
-<tr class="odd">
-<td id="T_d90cb_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">Baseball can be interesting than you'd think</td>
-<td id="T_d90cb_row10_col0" class="data row10 col0">0.001549</td>
-<td id="T_d90cb_row10_col1" class="data row10 col1">0.067243</td>
-<td id="T_d90cb_row10_col2" class="data row10 col2">0.139300</td>
-<td id="T_d90cb_row10_col3" class="data row10 col3">0.046084</td>
-<td id="T_d90cb_row10_col4" class="data row10 col4">0.151998</td>
-<td id="T_d90cb_row10_col5" class="data row10 col5">0.133220</td>
-<td id="T_d90cb_row10_col6" class="data row10 col6">0.136699</td>
-<td id="T_d90cb_row10_col7" class="data row10 col7">0.146568</td>
-<td id="T_d90cb_row10_col8" class="data row10 col8">0.115392</td>
-<td id="T_d90cb_row10_col9" class="data row10 col9">0.839617</td>
-<td id="T_d90cb_row10_col10" class="data row10 col10">1.000000</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute similarities exactly the same as we did before!</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>similarities <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a dataframe</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(similarities,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>            index<span class="op">=</span>sentences,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            columns<span class="op">=</span>sentences) <span class="op">\</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>            .style <span class="op">\</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>            .background_gradient(axis<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="searching-through-documents-with-semantic-search" class="level3">
 <h3 class="anchored" data-anchor-id="searching-through-documents-with-semantic-search">Searching through documents with semantic search</h3>
 <p>What does this allow you to do?</p>
-<div class="cell" data-execution_count="77">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'ai-report.pdf'</span>)</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="77">
-<pre><code>90</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> PyPDFLoader(<span class="st">'ai-report.pdf'</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> loader.load_and_split()</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="78">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running Chroma using direct local API.
-Using DuckDB in-memory for database. Data will be transient.</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="83">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>db.similarity_search(<span class="st">"losing jobs"</span>, k<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="83">
-<pre><code>[Document(lc_kwargs={'page_content': '7\n12 Cultural resistance and fears of job displacement and scepticism of AI technologies \ncannot be discounted. \n13 Across the board, respondents noted that mitigating AI integration challenges requires \nbridging knowledge gaps among various teams in the newsroom. Similarly, cross-\ndepartment collaboration was seen as necessary for achieving effective AI adoption.\n14 The challenge of keeping pace with the rapid evolution of AI was consistently \nmentioned throughout the survey.\n15 About 40% of respondents said their approach to AI has not changed over the past \nfew years, either because they are still in the beginning of their AI journey or because \nAI integration remains limited in their newsrooms. Concurrently, around a 1/4 said \ntheir organisation’s approach to AI has evolved; they have gained hands-on experience \nthat helps them think more realistically about AI.\n16 More than 60% of respondents are concerned about the ethical implications of AI \nintegration for editorial quality and other aspects of journalism. Journalists are trying \nto figure out how to integrate AI technologies in their work upholding journalistic \nvalues like accuracy, fairness, and transparency. \n17 Respondents called for transparency from the designers of AI systems and \ntechnology companies, and the users, namely newsrooms, with their audiences. \n18 Journalists and mediamakers continued to stress the need for a ‘human in the loop \napproach,’ in line with the results in our 2019 survey.\n19 There are fears that AI technologies would further commercialise journalism,  \nboosting poor quality and polarising content, leading to a further decline in public  \ntrust in journalism.\n20 Tech companies are driving innovation in AI and other technologies, but survey \nparticipants voiced concerns about their profit-driven nature, the concentration of \npower they enjoy, and their lack of transparency.\n21 Around 80% of the respondents expect a larger role for AI in their newsrooms  \nin the future. \n22 Survey participants expect AI to influence four main areas:\n 1  Fact-checking and disinformation analysis\n 2  Content personalisation and automation\n 3  Text summarisation and generation\n 4   Using chatbots to conduct preliminary interviews and gauge public sentiment  \non issues', 'metadata': {'source': 'ai-report.pdf', 'page': 7}}, page_content='7\n12 Cultural resistance and fears of job displacement and scepticism of AI technologies \ncannot be discounted. \n13 Across the board, respondents noted that mitigating AI integration challenges requires \nbridging knowledge gaps among various teams in the newsroom. Similarly, cross-\ndepartment collaboration was seen as necessary for achieving effective AI adoption.\n14 The challenge of keeping pace with the rapid evolution of AI was consistently \nmentioned throughout the survey.\n15 About 40% of respondents said their approach to AI has not changed over the past \nfew years, either because they are still in the beginning of their AI journey or because \nAI integration remains limited in their newsrooms. Concurrently, around a 1/4 said \ntheir organisation’s approach to AI has evolved; they have gained hands-on experience \nthat helps them think more realistically about AI.\n16 More than 60% of respondents are concerned about the ethical implications of AI \nintegration for editorial quality and other aspects of journalism. Journalists are trying \nto figure out how to integrate AI technologies in their work upholding journalistic \nvalues like accuracy, fairness, and transparency. \n17 Respondents called for transparency from the designers of AI systems and \ntechnology companies, and the users, namely newsrooms, with their audiences. \n18 Journalists and mediamakers continued to stress the need for a ‘human in the loop \napproach,’ in line with the results in our 2019 survey.\n19 There are fears that AI technologies would further commercialise journalism,  \nboosting poor quality and polarising content, leading to a further decline in public  \ntrust in journalism.\n20 Tech companies are driving innovation in AI and other technologies, but survey \nparticipants voiced concerns about their profit-driven nature, the concentration of \npower they enjoy, and their lack of transparency.\n21 Around 80% of the respondents expect a larger role for AI in their newsrooms  \nin the future. \n22 Survey participants expect AI to influence four main areas:\n 1  Fact-checking and disinformation analysis\n 2  Content personalisation and automation\n 3  Text summarisation and generation\n 4   Using chatbots to conduct preliminary interviews and gauge public sentiment  \non issues', metadata={'source': 'ai-report.pdf', 'page': 7}),
- Document(lc_kwargs={'page_content': '5555AI could become a crossroad and an insurmountable hurdle for news \norganisations that do not realise that AI is just a new aspect of the constant \nprogress of digital transformation. … some news organisations have been very slow \nin digitising their business models (or haven’t even succeeded in doing so) – now \nthe next shock is just around the corner. \nSeveral newsrooms expected AI to make them “leaner,” as an increasing number of tasks \nbecome automated:\nIt may mean job losses because the work is currently being done by say five \npeople, and may only need one person. \nIt will have a drastic impact…If machines can write stories, edit them and \ndistribute them, it follows that newsrooms have to be leaner. \nOthers said that AI will not “replace jobs.” Rather, AI will redefine the role of journalists; \n“steering AI… requires new competencies and new functions.” \nAnother respondent said: \nWe believe AI isn’t a threat to jobs. But people who learn to effectively use AI to \nleverage their work will be in demand, and soon many roles will expect people to be \nable to use these tools. \nThe need for a balancing act between tech and journalism, a theme that emerged in our \n2019 survey, remains imperative to a future where AI technologies are leveraged to serve \njournalism and its mission:\nIt will involve a rethinking of the entire workflow and, at least during the adoption \nphase, additional work to adapt to this new approach. There will be more \ncollaboration and intersection between journalistic and technical figures. \nOthers worried that the reliance on AI technologies will undermine journalistic values, for \ninstance by pushing polarising content. This in turn would reduce public trust in journalism, \nwhich many think is in decline as noted prev iously:', 'metadata': {'source': 'ai-report.pdf', 'page': 55}}, page_content='5555AI could become a crossroad and an insurmountable hurdle for news \norganisations that do not realise that AI is just a new aspect of the constant \nprogress of digital transformation. … some news organisations have been very slow \nin digitising their business models (or haven’t even succeeded in doing so) – now \nthe next shock is just around the corner. \nSeveral newsrooms expected AI to make them “leaner,” as an increasing number of tasks \nbecome automated:\nIt may mean job losses because the work is currently being done by say five \npeople, and may only need one person. \nIt will have a drastic impact…If machines can write stories, edit them and \ndistribute them, it follows that newsrooms have to be leaner. \nOthers said that AI will not “replace jobs.” Rather, AI will redefine the role of journalists; \n“steering AI… requires new competencies and new functions.” \nAnother respondent said: \nWe believe AI isn’t a threat to jobs. But people who learn to effectively use AI to \nleverage their work will be in demand, and soon many roles will expect people to be \nable to use these tools. \nThe need for a balancing act between tech and journalism, a theme that emerged in our \n2019 survey, remains imperative to a future where AI technologies are leveraged to serve \njournalism and its mission:\nIt will involve a rethinking of the entire workflow and, at least during the adoption \nphase, additional work to adapt to this new approach. There will be more \ncollaboration and intersection between journalistic and technical figures. \nOthers worried that the reliance on AI technologies will undermine journalistic values, for \ninstance by pushing polarising content. This in turn would reduce public trust in journalism, \nwhich many think is in decline as noted prev iously:', metadata={'source': 'ai-report.pdf', 'page': 55}),
- Document(lc_kwargs={'page_content': 'Other than language challenges, very few respondents mentioned failures in specific \nAI-applications. However, when discussed, some respondents attributed any failures to \norganisational issues, rather than to technical limitations: \nThe biggest failure has been slow progression on already identified use cases \nbecause of organisational issues, lack of focus and resources. \nFor some of our third-party available machine learning offerings, we found that \nwe didn’t have a strong onboarding process or clear explanations, so uptake has \nbeen slower than anticipated. \nOne respondent explained how their organisation decided to discontinue their work on \nan “automated service to write short stories about companies performance in the stock \nmarket,” because it did not gain popularity with the audience:\n[It] did not create enough user value (the users rather looked at the stock graph), \nand when the pandemic hit and all stocks went south, our thresholds were reached \nfor almost all companies spamming our users. \n24\n24', 'metadata': {'source': 'ai-report.pdf', 'page': 24}}, page_content='Other than language challenges, very few respondents mentioned failures in specific \nAI-applications. However, when discussed, some respondents attributed any failures to \norganisational issues, rather than to technical limitations: \nThe biggest failure has been slow progression on already identified use cases \nbecause of organisational issues, lack of focus and resources. \nFor some of our third-party available machine learning offerings, we found that \nwe didn’t have a strong onboarding process or clear explanations, so uptake has \nbeen slower than anticipated. \nOne respondent explained how their organisation decided to discontinue their work on \nan “automated service to write short stories about companies performance in the stock \nmarket,” because it did not gain popularity with the audience:\n[It] did not create enough user value (the users rather looked at the stock graph), \nand when the pandemic hit and all stocks went south, our thresholds were reached \nfor almost all companies spamming our users. \n24\n24', metadata={'source': 'ai-report.pdf', 'page': 24}),
- Document(lc_kwargs={'page_content': '33Newsrooms were not entirely sure which skillset(s) to look for in technical personnel . \nNewsrooms with several years of experience with AI integration in the newsroom \nmentioned specifically the challenge of achieving compatibility and interoperability with \nexisting systems and platforms: \nThe main blocker to deploying an ML-based tagging system, for example, is \ntechnical; it needs to be integrated with other systems. \nTested tools have to be implemented into current business structures, which \nrequires quite a lot of development and testing. \nThese responses highlight the huge strides some newsrooms have made in AI adoption \nat an institutional level. In our 2019 report, many of the respondents, including early \nadopters, were at the beginning of their AI journeys. Technical challenges focused on \nwhich projects to prioritise, how to demystify AI and providing general AI literacy training \nto personnel.\nThe responses also highlight a disparity between smaller, emerging newsrooms in Global \nSouth countries on the one hand, and large, well-resourced, more experienced news \norganisations in Global North countries. While responses by the former focused on finding \nthe resources to hire the technical experience needed, the latter have already deployed AI \ntechnologies in various areas and are now focused on achieving interoperability:\nWe are a mid-sized regional nonprofit startup with a strong engineering team \nand an innovative organisational culture… But, we have nowhere near the technical \npower of large national organisations. \nMitigating AI integration challenges goes beyond hiring the right technical staff. It \nrequires bridging knowledge gaps that exist among various teams in the newsroom, \na challenge that is more consistent across the board. Responses reflected a need to \nenhance AI literacy and technical skills among journalists and technical staff alike: \n[We] have varying levels of understanding on what AI is. In a team of about 20 \npeople, less than a ¼ have training on it and we have yet to get everybody up to \nspeed. I think my organisation will be equipped to take advantage of its potential \nonce we are all on the same page.', 'metadata': {'source': 'ai-report.pdf', 'page': 33}}, page_content='33Newsrooms were not entirely sure which skillset(s) to look for in technical personnel . \nNewsrooms with several years of experience with AI integration in the newsroom \nmentioned specifically the challenge of achieving compatibility and interoperability with \nexisting systems and platforms: \nThe main blocker to deploying an ML-based tagging system, for example, is \ntechnical; it needs to be integrated with other systems. \nTested tools have to be implemented into current business structures, which \nrequires quite a lot of development and testing. \nThese responses highlight the huge strides some newsrooms have made in AI adoption \nat an institutional level. In our 2019 report, many of the respondents, including early \nadopters, were at the beginning of their AI journeys. Technical challenges focused on \nwhich projects to prioritise, how to demystify AI and providing general AI literacy training \nto personnel.\nThe responses also highlight a disparity between smaller, emerging newsrooms in Global \nSouth countries on the one hand, and large, well-resourced, more experienced news \norganisations in Global North countries. While responses by the former focused on finding \nthe resources to hire the technical experience needed, the latter have already deployed AI \ntechnologies in various areas and are now focused on achieving interoperability:\nWe are a mid-sized regional nonprofit startup with a strong engineering team \nand an innovative organisational culture… But, we have nowhere near the technical \npower of large national organisations. \nMitigating AI integration challenges goes beyond hiring the right technical staff. It \nrequires bridging knowledge gaps that exist among various teams in the newsroom, \na challenge that is more consistent across the board. Responses reflected a need to \nenhance AI literacy and technical skills among journalists and technical staff alike: \n[We] have varying levels of understanding on what AI is. In a team of about 20 \npeople, less than a ¼ have training on it and we have yet to get everybody up to \nspeed. I think my organisation will be equipped to take advantage of its potential \nonce we are all on the same page.', metadata={'source': 'ai-report.pdf', 'page': 33})]</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>db.similarity_search(<span class="st">"losing jobs"</span>, k<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="specifying-details" class="level3">
 <h3 class="anchored" data-anchor-id="specifying-details">Specifying details</h3>
 <p>Let’s get a little more specific!</p>
-<div class="cell" data-execution_count="88">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> TextLoader</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> TextLoader(<span class="st">'hungarian-folktales.txt'</span>)</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>documents <span class="op">=</span> loader.load()</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>text_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>, chunk_overlap<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> text_splitter.split_documents(documents)</span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="88">
-<pre><code>453</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> TextLoader</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> TextLoader(<span class="st">'hungarian-folktales.txt'</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>documents <span class="op">=</span> loader.load()</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>text_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>, chunk_overlap<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> text_splitter.split_documents(documents)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="89">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> Chroma</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.embeddings <span class="im">import</span> HuggingFaceEmbeddings</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>embeddings <span class="op">=</span> HuggingFaceEmbeddings(model_name<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> Chroma.from_documents(docs, embeddings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running Chroma using direct local API.
-Using DuckDB in-memory for database. Data will be transient.
-Exiting: Cleaning up .chroma directory</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="97">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> db.similarity_search(<span class="st">"weddings at a festival with loud music"</span>, k<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match <span class="kw">in</span> matches:</span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(match.page_content)</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Eltelt az egy hónap, elérkezett az esküvő napja, ott volt a sok vendég,
-köztök a boltos is, csak a vőlegényt meg a menyasszonyt nem lehetett
-látni. Bekövetkezett az ebéd ideje is, mindnyájan vígan ültek le az
-asztalhoz, elkezdtek enni. Az volt a szokás a gróf házánál, hogy minden
-embernek egy kis külön tálban vitték az ételt; a boltos amint a maga
-táljából szedett levest, hát csak alig tudta megenni, olyan sótalan
-volt, nézett körül só után, de nem volt az egész asztalon; a második
-étel még sótalanabb volt, a harmadik meg már olyan volt, hogy hozzá se’
-tudott nyúlni. Kérdezték tőle hogy mért nem eszik? tán valami baja van
-az ételnek? amint ott vallatták, eszébe jutott a lyánya, hogy az neki
-azt mondta, hogy úgy szereti, mint a sót, elkezdett sírni; kérdezték
-aztán tőle, hogy mért sír, akkor elbeszélt mindent, hogy volt neki egy
-lyánya, az egyszer neki azt mondta, hogy úgy szereti mint a sót, ő
-megharagudott érte, elkergette a házától, lám most látja, hogy milyen
------</code></pre>
-</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> db.similarity_search(<span class="st">"weddings at a festival with loud music"</span>, k<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match <span class="kw">in</span> matches:</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(match.page_content)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
