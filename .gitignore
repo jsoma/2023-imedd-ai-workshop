@@ -1,5 +1,6 @@
 ~*
-*.md
+outline.md
+talk.md
 .DS_Store
 .ipynb_checkpoints
 questions.txt

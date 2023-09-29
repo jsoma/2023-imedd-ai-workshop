@@ -1,0 +1,1 @@
+You should [go here](https://colab.research.google.com/github/jsoma/2023-imedd-ai-workshop/blob/main/docs/Making%20and%20breaking%20AI%20in%20the%20newsroom.ipynb)
